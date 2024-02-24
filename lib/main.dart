@@ -6,6 +6,7 @@ import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/cubits/chat/cubit.dart';
+import 'package:softec_app/cubits/pose_analysis/pose_analysis_cubit.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/providers/analytics_provider.dart';
 import 'package:softec_app/router/router.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (_) => AuthService()),
             ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
-            BlocProvider(create: (_) => ChatCubit())
+            BlocProvider(create: (_) => ChatCubit()),
+            BlocProvider(create: (_) => PoseAnalysisCubit())
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
