@@ -93,8 +93,9 @@ class ProfileState extends ChangeNotifier {
       listen: false,
     ).authData!;
 
+    print(userData.uid);
     _db.collection('users').doc(userData.uid).update({
-      'reviews': FieldValue.arrayUnion(
+      'ratings': FieldValue.arrayUnion(
         [
           {
             'name': currentUser.fullname,

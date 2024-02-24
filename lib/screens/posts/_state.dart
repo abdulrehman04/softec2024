@@ -40,14 +40,14 @@ class PostState extends ChangeNotifier {
       return Future(() => false);
     }
     bool result = await PostsRepo().createPost(
+      context,
       caption: caption,
       file: file,
       uid: userData.uid,
       name: userData.fullname,
-      profileImage:
-          'https://images.mubicdn.net/images/cast_member/25100/cache-2388-1688754259/image-w856.jpg?size=800x',
-      // profileImage: userData. profileImage,
+      profileImage: userData.profilePicture,
     );
+
     isLoading = false;
     notifyListeners();
     return result;

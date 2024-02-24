@@ -15,6 +15,7 @@ class AuthData {
   final String focus;
   final List<Rating>? ratings;
   final List<String> followers;
+  int postCount;
   AuthData({
     required this.email,
     required this.fullname,
@@ -25,6 +26,7 @@ class AuthData {
     required this.focus,
     this.ratings,
     required this.followers,
+    required this.postCount,
   });
 
   AuthData copyWith({
@@ -37,6 +39,7 @@ class AuthData {
     String? focus,
     List<Rating>? ratings,
     List<String>? followers,
+    int? postCount,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -48,6 +51,7 @@ class AuthData {
       focus: focus ?? this.focus,
       ratings: ratings ?? this.ratings,
       followers: followers ?? this.followers,
+      postCount: postCount ?? this.postCount,
     );
   }
 
@@ -62,23 +66,31 @@ class AuthData {
       'focus': focus,
       'ratings': (ratings ?? []).map((x) => x?.toMap()).toList(),
       'followers': followers,
+      'postCount': postCount,
     };
   }
 
   factory AuthData.fromMap(Map<String, dynamic> map) {
+    print(map['ratings']);
     return AuthData(
       email: map['email'] as String,
-      followers: map['followers'] ?? [],
+      followers: map['followers'] != null
+          ? List<String>.from(map['followers'] as List)
+          : [],
       fullname: map['fullname'] as String,
       profilePicture: (map['profilePicture'] ?? '') as String,
       uid: map['uid'] as String,
       isProfessional: map['isProfessional'] as bool,
       domain: map['domain'] as String,
       focus: map['focus'] as String,
+      postCount: map['postCount'] ?? 0,
       ratings: map['ratings'] != null
           ? List<Rating>.from(
               (map['ratings'] as List).map<Rating?>(
-                (x) => Rating.fromMap(x as Map<String, dynamic>),
+                (x) {
+                  print(x);
+                  return Rating.fromMap(x as Map<String, dynamic>);
+                },
               ),
             )
           : [],
