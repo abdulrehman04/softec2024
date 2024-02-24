@@ -23,6 +23,9 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     App.init(context);
 
-    return const _Body();
+    return ChangeNotifierProvider<_ScreenState>(
+      create: (_) => _ScreenState(),
+      child: const _Body(),
+    );
   }
 }
