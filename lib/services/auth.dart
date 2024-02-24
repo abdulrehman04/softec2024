@@ -5,6 +5,7 @@ import 'package:softec_app/repositories/auth_repo.dart';
 class AuthService extends ChangeNotifier {
   bool isRegisterLoading = false;
   AuthData? authData;
+  // List<AuthData> allUsers = [];
   Future<void> register(Map<String, dynamic> payload) async {
     try {
       isRegisterLoading = true;
@@ -28,6 +29,7 @@ class AuthService extends ChangeNotifier {
       notifyListeners();
 
       authData = await AuthRepo.loginUser(payload);
+      fetchAllUsers();
       isLoginLoading = false;
       notifyListeners();
     } catch (e) {
@@ -38,7 +40,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  List<AuthData>? allUsers;
+  List<AuthData> allUsers = [];
   bool isFetchingUsers = false;
 
   Future<void> fetchAllUsers() async {

@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/cubits/chat/cubit.dart';
+import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/models/chat/chat_meta.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/all_users.dart';
@@ -22,9 +23,6 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     App.init(context);
-    return ChangeNotifierProvider(
-      create: (_) => _ScreenState(),
-      child: const _Body(),
-    );
+    return const _Body();
   }
 }
