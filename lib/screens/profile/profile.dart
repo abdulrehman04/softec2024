@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/screens/profile/profile_reviews.dart';
@@ -31,8 +32,8 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  width: 150.w,
-                  height: 150.h,
+                  width: 170.w,
+                  height: 170.h,
                   child: Stack(
                     children: [
                       InkWell(
@@ -64,7 +65,92 @@ class ProfileScreen extends StatelessWidget {
                         child: controller.isLoading
                             ? const CircularProgressIndicator()
                             : Container(),
-                      )
+                      ),
+                      controller.userData.postCount > 10
+                          ? Positioned(
+                              bottom: 15,
+                              right: 15,
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      String badge =
+                                          controller.userData.postCount > 10 &&
+                                                  controller
+                                                          .userData.postCount <
+                                                      150
+                                              ? 'Bronze'
+                                              : controller.userData.postCount >
+                                                          150 &&
+                                                      controller.userData
+                                                              .postCount <
+                                                          500
+                                                  ? 'Silver'
+                                                  : 'Gold';
+
+                                      Color color =
+                                          controller.userData.postCount > 10 &&
+                                                  controller
+                                                          .userData.postCount <
+                                                      150
+                                              ? Colors.brown
+                                              : controller.userData.postCount >
+                                                          150 &&
+                                                      controller.userData
+                                                              .postCount <
+                                                          500
+                                                  ? Colors.grey
+                                                  : Colors.yellow[700]!;
+
+                                      int nextLevel = (badge == 'Bronze')
+                                          ? 150
+                                          : (badge == 'Silver')
+                                              ? 500
+                                              : 3000;
+
+                                      return AlertDialog(
+                                        title: Text('Badge details'),
+                                        content: Container(
+                                          height: 200,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Column(
+                                            children: [
+                                              Icon(
+                                                Icons.shield,
+                                                size: 80,
+                                                color: color,
+                                              ),
+                                              25.verticalSpace,
+                                              Text(
+                                                'You currently have $badge badge. ${badge == 'Gold' ? '' : 'Make $nextLevel posts to achieve the next badge'}',
+                                                maxLines: 3,
+                                                softWrap: true,
+                                                style: AppText.h2,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.shield,
+                                  color: controller.userData.postCount > 10 &&
+                                          controller.userData.postCount < 150
+                                      ? Colors.brown
+                                      : controller.userData.postCount > 150 &&
+                                              controller.userData.postCount <
+                                                  500
+                                          ? Colors.grey
+                                          : Colors.yellow[700],
+                                  size: 35,
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),

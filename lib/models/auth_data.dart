@@ -19,6 +19,7 @@ class AuthData {
   List<NotificationModel>? notis;
 
   final List<String> followers;
+  int postCount;
   AuthData({
     required this.email,
     required this.fullname,
@@ -31,6 +32,7 @@ class AuthData {
     this.deviceToken,
     this.notis,
     required this.followers,
+    required this.postCount,
   });
 
   AuthData copyWith({
@@ -45,6 +47,7 @@ class AuthData {
     String? deviceToken,
     List<NotificationModel>? notis,
     List<String>? followers,
+    int? postCount,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -58,6 +61,7 @@ class AuthData {
       deviceToken: deviceToken ?? this.deviceToken,
       notis: notis ?? this.notis,
       followers: followers ?? this.followers,
+      postCount: postCount ?? this.postCount,
     );
   }
 
@@ -74,10 +78,12 @@ class AuthData {
       'deviceToken': deviceToken ?? '',
       'notis': (notis ?? []).map((e) => e.toMap()).toList(),
       'followers': followers,
+      'postCount': postCount,
     };
   }
 
   factory AuthData.fromMap(Map<String, dynamic> map) {
+    print(map['ratings']);
     return AuthData(
         email: map['email'] as String,
         fullname: map['fullname'] as String,
@@ -86,10 +92,13 @@ class AuthData {
         isProfessional: map['isProfessional'] as bool,
         domain: map['domain'] as String,
         focus: map['focus'] as String,
+        postCount: map['postCount'] ?? 0,
         ratings: map['ratings'] != null
             ? List<Rating>.from(
                 (map['ratings'] as List).map<Rating?>(
-                  (x) => Rating.fromMap(x as Map<String, dynamic>),
+                  (x) {
+                    return Rating.fromMap(x as Map<String, dynamic>);
+                  },
                 ),
               )
             : [],
