@@ -5,7 +5,6 @@ import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
-import 'package:softec_app/screens/login/login.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -26,10 +25,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
-      // child: const HomeScreen(),
-      // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
-        final navigatorKey = GlobalKey<NavigatorState>();
         final List<NavigatorObserver> observers = [];
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -40,14 +36,11 @@ class MyApp extends StatelessWidget {
           },
           theme: theme.themeDark,
           onGenerateRoute: onGenerateRoutes,
-          navigatorKey: navigatorKey,
           navigatorObservers: [
             ...observers,
             NavigationHistoryObserver(),
           ],
-          home: const LoginScreen(),
-          // You can use the library anywhere in the app even in theme
-          // home: const HomeScreen(),
+          initialRoute: 'login',
         );
       },
       // child: const HomePage(title: 'First Method'),

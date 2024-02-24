@@ -3,16 +3,17 @@ part of '../login.dart';
 class _Body extends StatelessWidget {
   const _Body();
 
+  static final _loginFormKey = GlobalKey<FormBuilderState>();
+
   @override
   Widget build(BuildContext context) {
-    final screenState = _ScreenState.s(context, true);
-
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: Space.all(),
           child: FormBuilder(
-            key: screenState.formKey,
+            key: _loginFormKey,
             initialValue: _FormData.initialValues(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +78,11 @@ class _Body extends StatelessWidget {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              AppRouter.push(context, const RegisterScreen());
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
+                                ),
+                              );
                             },
                         ),
                       ],
