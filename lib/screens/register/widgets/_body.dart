@@ -208,7 +208,7 @@ class _Body extends StatelessWidget {
                   ),
                   Space.y2!,
                   FormBuilderCheckbox(
-                    name: 'checkbox',
+                    name: 'isProfessional',
                     title: const Text('Professional Account'),
                   ),
                   Space.y2!,
@@ -218,12 +218,23 @@ class _Body extends StatelessWidget {
                     label: 'Register',
                     onPressed: () {
                       final isValid = screenState.formKey.currentState!.validate();
-                      print(isValid);
                       screenState.formKey.currentState!.save();
-                      // if (!isValid) return;
+                      if (!isValid) return;
 
-                      final formData = screenState.formKey.currentState!.value;
-                      print(formData);
+                      Map<String, dynamic> formData = screenState.formKey.currentState!.value;
+
+                      Map<String, dynamic> payload = {
+                        'fullname': formData['name'],
+                        'domain': formData['experties'],
+                        'email':  formData['email'],
+                        'password': formData['password'],
+                        'focus': formData['focus'],
+                        'isProfessional': formData['isProfessional'],
+                      };
+                      if (payload['isProfessional'] == null) {
+                        payload['isProfessional'] = false;
+                      }
+                      // print(payload);
                       // final email = formData[_FormKeys.email] as String;
                       // final password = formData[_FormKeys.password] as String;
                       // final name = formData[_FormKeys.name] as String;
