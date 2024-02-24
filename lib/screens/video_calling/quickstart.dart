@@ -51,12 +51,12 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
                 child: Container(
                   height: 75,
                   width: 75,
-                  margin: EdgeInsets.only(bottom: 25),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.only(bottom: 25),
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.red,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.call_end,
                     size: 32,
                     color: Colors.white,
@@ -172,7 +172,6 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
 
   // Display local video preview
   Widget mainVideoView() {
-    print(_agoraManager.isJoined);
     if (_agoraManager.currentProduct == ProductName.voiceCalling) {
       return Container();
     } else if (_agoraManager.isJoined) {
