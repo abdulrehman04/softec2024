@@ -33,20 +33,20 @@ class NotificationBase {
     await fln.show(id, title, body, not);
   }
 
-  String _constructFCMPayload(String? token, String body) {
+  String _constructFCMPayload(String? token, String body, String title) {
     return jsonEncode({
       'to': token,
       'data': {
         'via': 'FlutterFire Cloud Messaging',
       },
       'notification': {
-        'title': 'Title notification - FCM',
+        'title': title,
         'body': body,
       },
     });
   }
 
-  Future<void> sendPushMessage(String token, String body) async {
+  Future<void> sendPushMessage(String token, String body, String title) async {
     try {
       const serverKey =
           'AAAAFVE7aY0:APA91bGGy9agjDCcdPvsxJ9uBxX-bR24H_-tzdTazzngiwqSuz2b5Zt8HeHOyenYJbxuRcKTyxV3hrih2QB-BFJtHq-MmShXNXk4mK3DIoqPYoBMIJxslf_mnzY5UQIpxDRRrwYaSb5E';
@@ -57,7 +57,7 @@ class NotificationBase {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'key=$serverKey'
         },
-        body: _constructFCMPayload(token, body),
+        body: _constructFCMPayload(token, body, title),
       );
       debugPrint('FCM request for device sent!');
     } catch (e) {
