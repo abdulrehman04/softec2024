@@ -6,6 +6,7 @@ import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/add_event/add_event.dart';
 import 'package:softec_app/services/event.dart';
 import 'package:softec_app/utils/app_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventScreen extends StatelessWidget {
   const EventScreen({super.key});
@@ -50,6 +51,10 @@ class EventScreen extends StatelessWidget {
                         child: ListTile(
                           title: Text(event.name),
                           subtitle: Text(event.location),
+                          onTap: () async {
+                            final uri = Uri.parse(event.url);
+                            await launchUrl(uri);
+                          },
                           trailing: Text(
                             AppUtils.getStatus(event),
                             style: AppText.b1!.cl(getColor(event)),
