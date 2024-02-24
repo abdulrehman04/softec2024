@@ -16,7 +16,7 @@ class PostItem extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          leading: Icon(Icons.person),
+          leading: const Icon(Icons.person),
           title: Text(name),
         ),
         Padding(
