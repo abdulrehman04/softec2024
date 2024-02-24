@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         final List<NavigatorObserver> observers = [];
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'First Method',
+          title: 'Softec 2024',
           builder: (context, child) {
             App.init(context);
             return child!;

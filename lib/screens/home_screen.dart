@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/chats.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
@@ -13,6 +15,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('First Method'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              AppRouter.push(context, const ChatsScreen());
+            },
+            icon: const Icon(Icons.telegram),
+          )
+        ],
       ),
       bottomNavigationBar: const BottomBar(),
       body: Column(
