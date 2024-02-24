@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:softec_app/screens/login/login.dart';
 import 'package:softec_app/screens/notifications_screen.dart';
 import 'package:softec_app/screens/posts/posts.dart';
-import 'package:softec_app/screens/profile_screen.dart';
+import 'package:softec_app/screens/profile/profile.dart';
 import 'package:softec_app/screens/register/register.dart';
 import 'package:softec_app/screens/search_screen/search_screen.dart';
 
