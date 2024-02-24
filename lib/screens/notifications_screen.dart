@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:softec_app/services/notifications/service.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -6,14 +8,41 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notiP = Provider.of<NotiService>(context, listen: true);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notifications'),
       ),
       bottomNavigationBar: const BottomBar(),
-      body: const Center(
-        child: Text('Notifications Screen'),
-      ),
+      body: notiP.isSavingNoti
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                itemCount: notiP.allNoti.length,
+                itemBuilder: (context, index) {
+                  final noti = notiP.allNoti[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      title: Text(noti.title),
+                      subtitle: Text(noti.body),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+              ),
+            ),
     );
   }
 }

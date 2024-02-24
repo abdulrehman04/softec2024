@@ -45,4 +45,6 @@ class App {
       ),
     );
   }
+
+  static flutterLocalNotificationsPlugin() {}
 }

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:softec_app/models/notification.dart';
 
 import 'package:softec_app/models/ratings.dart';
 
@@ -14,6 +15,9 @@ class AuthData {
   final String domain;
   final String focus;
   final List<Rating>? ratings;
+  String? deviceToken;
+  List<NotificationModel>? notis;
+
   final List<String> followers;
   int postCount;
   AuthData({
@@ -25,6 +29,8 @@ class AuthData {
     required this.domain,
     required this.focus,
     this.ratings,
+    this.deviceToken,
+    this.notis,
     required this.followers,
     required this.postCount,
   });
@@ -38,6 +44,8 @@ class AuthData {
     String? domain,
     String? focus,
     List<Rating>? ratings,
+    String? deviceToken,
+    List<NotificationModel>? notis,
     List<String>? followers,
     int? postCount,
   }) {
@@ -50,6 +58,8 @@ class AuthData {
       domain: domain ?? this.domain,
       focus: focus ?? this.focus,
       ratings: ratings ?? this.ratings,
+      deviceToken: deviceToken ?? this.deviceToken,
+      notis: notis ?? this.notis,
       followers: followers ?? this.followers,
       postCount: postCount ?? this.postCount,
     );
@@ -64,7 +74,9 @@ class AuthData {
       'isProfessional': isProfessional,
       'domain': domain,
       'focus': focus,
-      'ratings': (ratings ?? []).map((x) => x?.toMap()).toList(),
+      'ratings': (ratings ?? []).map((x) => x.toMap()).toList(),
+      'deviceToken': deviceToken ?? '',
+      'notis': (notis ?? []).map((e) => e.toMap()).toList(),
       'followers': followers,
       'postCount': postCount,
     };
@@ -73,28 +85,34 @@ class AuthData {
   factory AuthData.fromMap(Map<String, dynamic> map) {
     print(map['ratings']);
     return AuthData(
-      email: map['email'] as String,
-      followers: map['followers'] != null
-          ? List<String>.from(map['followers'] as List)
-          : [],
-      fullname: map['fullname'] as String,
-      profilePicture: (map['profilePicture'] ?? '') as String,
-      uid: map['uid'] as String,
-      isProfessional: map['isProfessional'] as bool,
-      domain: map['domain'] as String,
-      focus: map['focus'] as String,
-      postCount: map['postCount'] ?? 0,
-      ratings: map['ratings'] != null
-          ? List<Rating>.from(
-              (map['ratings'] as List).map<Rating?>(
-                (x) {
-                  print(x);
-                  return Rating.fromMap(x as Map<String, dynamic>);
-                },
-              ),
-            )
-          : [],
-    );
+        email: map['email'] as String,
+        fullname: map['fullname'] as String,
+        profilePicture: (map['profilePicture'] ?? '') as String,
+        uid: map['uid'] as String,
+        isProfessional: map['isProfessional'] as bool,
+        domain: map['domain'] as String,
+        focus: map['focus'] as String,
+        postCount: map['postCount'] ?? 0,
+        ratings: map['ratings'] != null
+            ? List<Rating>.from(
+                (map['ratings'] as List).map<Rating?>(
+                  (x) {
+                    return Rating.fromMap(x as Map<String, dynamic>);
+                  },
+                ),
+              )
+            : [],
+        deviceToken: map['deviceToken'] as String? ?? '',
+        notis: map['notis'] != null
+            ? List<NotificationModel>.from(
+                (map['notis'] as List).map<NotificationModel?>(
+                  (e) => NotificationModel.fromMap(e as Map<String, dynamic>),
+                ),
+              )
+            : [],
+        followers: map['followers'] != null
+            ? List<String>.from(map['followers'] as List)
+            : []);
   }
 
   String toJson() => json.encode(toMap());
@@ -118,7 +136,9 @@ class AuthData {
         other.isProfessional == isProfessional &&
         other.domain == domain &&
         other.focus == focus &&
-        listEquals(other.ratings, ratings);
+        listEquals(other.ratings, ratings) &&
+        other.deviceToken == deviceToken &&
+        other.notis == notis;
   }
 
   @override
@@ -130,6 +150,8 @@ class AuthData {
         isProfessional.hashCode ^
         domain.hashCode ^
         focus.hashCode ^
-        ratings.hashCode;
+        ratings.hashCode ^
+        deviceToken.hashCode ^
+        notis.hashCode;
   }
 }
