@@ -21,8 +21,8 @@ class _BodyState extends State<_Body> {
   @override
   Widget build(BuildContext context) {
     final authCubit = Provider.of<AuthService>(context);
-    final chatCubit = ChatCubit.c(context, true);
-    final user = authCubit.authData!;
+    // final chatCubit = ChatCubit.c(context, true);
+    // final user = authCubit.authData!;
 
     final screenState = _ScreenState.s(context, true);
 
