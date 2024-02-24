@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
+import 'package:softec_app/cubits/chat/cubit.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/services/auth.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (_) => AuthService()),
+            BlocProvider(create: (_) => ChatCubit())
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
