@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
+import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
+import 'package:softec_app/services/auth.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -27,20 +29,25 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         final List<NavigatorObserver> observers = [];
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Softec 2024',
-          builder: (context, child) {
-            App.init(context);
-            return child!;
-          },
-          theme: theme.themeDark,
-          onGenerateRoute: onGenerateRoutes,
-          navigatorObservers: [
-            ...observers,
-            NavigationHistoryObserver(),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => AuthService()),
           ],
-          initialRoute: 'login',
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Softec 2024',
+            builder: (context, child) {
+              App.init(context);
+              return child!;
+            },
+            theme: theme.themeDark,
+            onGenerateRoute: onGenerateRoutes,
+            navigatorObservers: [
+              ...observers,
+              NavigationHistoryObserver(),
+            ],
+            initialRoute: 'login',
+          ),
         );
       },
       // child: const HomePage(title: 'First Method'),

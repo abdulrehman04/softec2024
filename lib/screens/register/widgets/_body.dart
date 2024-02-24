@@ -6,6 +6,8 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenState = _ScreenState.s(context, true);
+    final authService = Provider.of<AuthService>(context, listen: true);
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -81,12 +83,12 @@ class _Body extends StatelessWidget {
                       return AppTextField(
                         controller: textEditingController,
                         node: focusNode,
-                        name: 'experties',
+                        name: 'domain',
                         prefixIcon: const Icon(Icons.dynamic_feed_sharp),
                         hint: 'Enter Experties e.g Expert',
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
-                            errorText: 'Domain cannot be empty',
+                            errorText: 'Field cannot be empty',
                           ),
                           (value) {
                             if (value != null) {
@@ -216,17 +218,19 @@ class _Body extends StatelessWidget {
                   Space.y2!,
                   AppButton(
                     label: 'Register',
-                    onPressed: () {
-                      final isValid = screenState.formKey.currentState!.validate();
+                    onPressed: () async {
+                      final isValid =
+                          screenState.formKey.currentState!.validate();
                       screenState.formKey.currentState!.save();
                       if (!isValid) return;
 
-                      Map<String, dynamic> formData = screenState.formKey.currentState!.value;
+                      Map<String, dynamic> formData =
+                          screenState.formKey.currentState!.value;
 
                       Map<String, dynamic> payload = {
                         'fullname': formData['name'],
-                        'domain': formData['experties'],
-                        'email':  formData['email'],
+                        'domain': formData['domain'],
+                        'email': formData['email'],
                         'password': formData['password'],
                         'focus': formData['focus'],
                         'isProfessional': formData['isProfessional'],
@@ -234,15 +238,12 @@ class _Body extends StatelessWidget {
                       if (payload['isProfessional'] == null) {
                         payload['isProfessional'] = false;
                       }
-                      // print(payload);
-                      // final email = formData[_FormKeys.email] as String;
-                      // final password = formData[_FormKeys.password] as String;
-                      // final name = formData[_FormKeys.name] as String;
-                      // final domain = formData[_FormKeys.domain] as String;
-                      // final Map<String, dynamic> payload = {
-                      //   'fullname': name,
-                      //   'domain': domain,
-                      // };
+
+                      await authService.register(payload);
+                      if (authService.authData != null) {
+                        if (!context.mounted) return;
+                        AppRouter.push(context, const HomeScreen());
+                      }
                     },
                     buttonType: ButtonType.borderedSecondary,
                   ),
