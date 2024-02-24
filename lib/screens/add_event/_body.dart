@@ -106,7 +106,7 @@ class _BodyState extends State<_Body> {
                   ? const Center(child: CircularProgressIndicator())
                   : AppButton(
                       label: 'Add Event',
-                      onPressed: () {
+                      onPressed: () async {
                         if (startDate == null || endDate == null) {
                           SnackBars.failure(
                               context, 'Please select a date range');
@@ -128,8 +128,18 @@ class _BodyState extends State<_Body> {
                           participants: [],
                         );
 
-                        eventP.createEvent(event);
+                        final success = await eventP.createEvent(event);
+                        if (success) {
+                          if (!mounted) return;
+                          SnackBars.success(
+                              context, 'Your event has been added');
+                        } else {
+                          if (!mounted) return;
+                          SnackBars.failure(
+                              context, 'Sorry! Please try again later.');
+                        }
 
+                        form.reset();
                       },
                       buttonType: ButtonType.borderedSecondary,
                     ),

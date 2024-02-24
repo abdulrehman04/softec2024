@@ -8,21 +8,28 @@ class EventService extends ChangeNotifier {
   List<Event> allEvents = [];
   final repo = EventRepo();
 
-  void createEvent(Event event) async {
-    isCreatingEvent = true;
-    notifyListeners();
-    await repo.saveEvent(
-      event.name,
-      event.url,
-      event.location,
-      event.startDate,
-      event.endDate,
-      event.id,
-      event.participants,
-    );
-    allEvents.add(event);
-    isCreatingEvent = false;
-    notifyListeners();
+  Future<bool> createEvent(Event event) async {
+    try {
+      isCreatingEvent = true;
+      notifyListeners();
+      await repo.saveEvent(
+        event.name,
+        event.url,
+        event.location,
+        event.startDate,
+        event.endDate,
+        event.id,
+        event.participants,
+      );
+      allEvents.add(event);
+      isCreatingEvent = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      isCreatingEvent = false;
+      notifyListeners();
+      return false;
+    }
   }
 
   void fetchEvents() async {
