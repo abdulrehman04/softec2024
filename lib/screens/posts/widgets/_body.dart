@@ -13,6 +13,8 @@ class _BodyState extends State<_Body> {
     super.initState();
     final notiProvider = Provider.of<NotiService>(context, listen: false);
     notiProvider.pullNotis();
+    final eventP = Provider.of<EventService>(context, listen: false);
+    eventP.fetchEvents();
   }
 
   @override

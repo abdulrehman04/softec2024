@@ -31,6 +31,7 @@ class EventRepo {
   Future<List<Event>> getEvents() async {
     try {
       final data = await _firestore.collection('events').get();
+      if (data.docs.isEmpty) return [];
       return data.docs.map((e) => Event.fromMap(e.data())).toList();
     } catch (e) {
       throw Exception('Internal server error');
