@@ -9,7 +9,7 @@ class AuthService extends ChangeNotifier {
     try {
       isRegisterLoading = true;
       notifyListeners();
-      
+
       authData = await AuthRepo.signUp(payload);
       isRegisterLoading = false;
       notifyListeners();
@@ -44,9 +44,8 @@ class AuthService extends ChangeNotifier {
   Future<void> fetchAllUsers() async {
     try {
       isFetchingUsers = true;
-      notifyListeners();
-
       allUsers = await AuthRepo.fetchAllUsers();
+      allUsers!.removeWhere((element) => element.uid == authData!.uid);
       isFetchingUsers = false;
       notifyListeners();
     } catch (e) {

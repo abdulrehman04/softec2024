@@ -9,36 +9,14 @@ class _ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final screenState = _ScreenState.s(context);
-    // final chatCubit = ChatCubit.c(context);
-
     return InkWell(
-      // onTap: () => AppRoutes.conversation.push(
-      //   context,
-      //   arguments: {'user': user},
-      // ),
-      // onLongPress: () async {
-      //   final value = await showModalBottomSheet<bool?>(
-      //     context: context,
-      //     backgroundColor: Colors.transparent,
-      //     builder: (_) => ListenableProvider.value(
-      //       value: screenState,
-      //       child: const _DeleteModal(),
-      //     ),
-      //   );
-
-      //   if (value != null && value) {
-      //     chatCubit.deleteChat(chatId);
-      //   }
-      // },
+      onTap: () {
+        AppRouter.push(context, ConversationScreen(receiver: user));
+      },
       child: Padding(
         padding: Space.all(),
         child: Row(
           children: [
-            // CircleAvatar(
-            //   radius: 25,
-            //   backgroundImage: NetworkImage(user.photoUrl),
-            // ),
             Space.x2!,
             Expanded(
               child: Column(
