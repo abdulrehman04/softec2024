@@ -5,6 +5,7 @@ import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/login/login.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
             ...observers,
             NavigationHistoryObserver(),
           ],
-          initialRoute: 'home',
+          home: const LoginScreen(),
           // You can use the library anywhere in the app even in theme
           // home: const HomeScreen(),
         );
