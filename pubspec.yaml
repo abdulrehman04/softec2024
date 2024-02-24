@@ -51,14 +51,10 @@ dependencies:
   permission_handler: 
   equatable: ^2.0.5
   intl: ^0.18.1
-<<<<<<< HEAD
   google_mlkit_pose_detection: ^0.10.0
   image_picker: ^1.0.7
   camera: ^0.10.5+9
   flutter_expandable_fab: ^2.0.0
-=======
-  image_picker: ^1.0.7
->>>>>>> 4739ac72998512ef1a6deb98fb70cade1945d299
 
 
 dev_dependencies:
