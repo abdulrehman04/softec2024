@@ -6,6 +6,7 @@ import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/screens/profile/profile_reviews.dart';
 import 'package:softec_app/screens/profile/widgets/usertype_row.dart';
+import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
