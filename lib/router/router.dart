@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:softec_app/screens/home_screen.dart';
 import 'package:softec_app/screens/login/login.dart';
 import 'package:softec_app/screens/notifications_screen.dart';
+import 'package:softec_app/screens/posts/posts.dart';
 import 'package:softec_app/screens/profile_screen.dart';
 import 'package:softec_app/screens/register/register.dart';
 import 'package:softec_app/screens/search_screen.dart';
-
-
 
 Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
     case 'home':
       return FadeRoute(
         settings: settings,
-        child: const HomeScreen(),
+        child: const Posts(),
       );
 
     case 'login':
