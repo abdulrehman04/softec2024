@@ -5,7 +5,6 @@ import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
-// import 'package:softec_app/screens/home_screen.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -31,7 +30,6 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         final navigatorKey = GlobalKey<NavigatorState>();
         final List<NavigatorObserver> observers = [];
-        // App.init(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
