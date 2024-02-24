@@ -6,12 +6,13 @@ class Event {
   final String name;
   final String location;
   final DateTime date;
+  final String id;
   final List<String> participants;
-
   Event({
     required this.name,
     required this.location,
     required this.date,
+    required this.id,
     required this.participants,
   });
 
@@ -19,12 +20,14 @@ class Event {
     String? name,
     String? location,
     DateTime? date,
+    String? id,
     List<String>? participants,
   }) {
     return Event(
       name: name ?? this.name,
       location: location ?? this.location,
       date: date ?? this.date,
+      id: id ?? this.id,
       participants: participants ?? this.participants,
     );
   }
@@ -34,6 +37,7 @@ class Event {
       'name': name,
       'location': location,
       'date': date.millisecondsSinceEpoch,
+      'id': id,
       'participants': participants,
     };
   }
@@ -43,6 +47,7 @@ class Event {
       name: map['name'] as String,
       location: map['location'] as String,
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
+      id: map['id'] as String,
       participants: List<String>.from((map['participants'] as List<String>)),
     );
   }
@@ -54,7 +59,7 @@ class Event {
 
   @override
   String toString() {
-    return 'Event(name: $name, location: $location, date: $date, participants: $participants)';
+    return 'Event(name: $name, location: $location, date: $date, id: $id, participants: $participants)';
   }
 
   @override
@@ -64,6 +69,7 @@ class Event {
     return other.name == name &&
         other.location == location &&
         other.date == date &&
+        other.id == id &&
         listEquals(other.participants, participants);
   }
 
@@ -72,6 +78,7 @@ class Event {
     return name.hashCode ^
         location.hashCode ^
         date.hashCode ^
+        id.hashCode ^
         participants.hashCode;
   }
 }
