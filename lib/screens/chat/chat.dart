@@ -14,6 +14,7 @@ import 'package:softec_app/screens/conversation/conversation.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
+import 'package:softec_app/widgets/headless/divider.dart';
 
 part '_state.dart';
 

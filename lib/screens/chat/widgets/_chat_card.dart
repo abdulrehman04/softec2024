@@ -25,14 +25,16 @@ class _ChatCard extends StatelessWidget {
                 children: [
                   Text(
                     user.fullname,
-                    style: AppText.b2b,
+                    style: AppText.h3bm,
                   ),
                   Space.y2!,
                   Text(
                     lastMessage,
-                    style: AppText.l1!.copyWith(color: AppTheme.c.grey, overflow: TextOverflow.ellipsis),
+                    style: AppText.l1!.copyWith(
+                        color: AppTheme.c.lightGrey,
+                        overflow: TextOverflow.ellipsis),
                     overflow: TextOverflow.ellipsis,
-                  )
+                  ),
                 ],
               ),
             ),
