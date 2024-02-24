@@ -3,17 +3,18 @@ part of '../login.dart';
 class _Body extends StatelessWidget {
   const _Body();
 
-  static final _loginFormKey = GlobalKey<FormBuilderState>();
-
   @override
   Widget build(BuildContext context) {
+    final screenState = _ScreenState.s(context, true);
+    final authService = Provider.of<AuthService>(context, listen: false);
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
           padding: Space.all(),
           child: FormBuilder(
-            key: _loginFormKey,
+            key: screenState.formKey,
             initialValue: _FormData.initialValues(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +51,21 @@ class _Body extends StatelessWidget {
                 const Spacer(),
                 AppButton(
                   label: 'Login',
-                  onPressed: () {
-                    'home'.push(context);
+                  onPressed: () async {
+                    final form = screenState.formKey.currentState!;
+                    final isValid = form.saveAndValidate();
+                    if (!isValid) return;
+
+                    await authService.login(
+                      form.value,
+                    );
+
+                    if (authService.authData != null) {
+                      if (!context.mounted) return;
+                      'home'.push(context);
+                    }
+
+                    // 'home'.push(context);
                     // final form = screenState.formKey.currentState;
                     // final isValid = form!.saveAndValidate();
                     // if (!isValid) return;
