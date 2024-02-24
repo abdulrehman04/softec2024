@@ -20,7 +20,6 @@ part '_state.dart';
 part 'widgets/_body.dart';
 part 'widgets/_chat_card.dart';
 
-
 class ChatScreen extends StatelessWidget {
   const ChatScreen({Key? key}) : super(key: key);
 
