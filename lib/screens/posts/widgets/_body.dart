@@ -8,12 +8,13 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  
   @override
   void initState() {
     super.initState();
     final notiProvider = Provider.of<NotiService>(context, listen: false);
     notiProvider.pullNotis();
+    final eventP = Provider.of<EventService>(context, listen: false);
+    eventP.fetchEvents();
   }
 
   @override
@@ -44,6 +45,14 @@ class _BodyState extends State<_Body> {
             child: const Icon(Icons.edit_document),
             onPressed: () {
               AppRouter.push(context, CreatePost());
+            },
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            tooltip: 'Add Event',
+            child: const Icon(Icons.event),
+            onPressed: () {
+              AppRouter.push(context, const EventScreen());
             },
           ),
           FloatingActionButton.small(
