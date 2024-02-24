@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/router/router.dart';
-import 'package:softec_app/screens/chats.dart';
+import 'package:softec_app/screens/chat/chat.dart';
 import 'package:softec_app/screens/posts/widgets/post_item.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 
@@ -19,7 +19,7 @@ class Posts extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              AppRouter.push(context, const ChatsScreen());
+              AppRouter.push(context, const ChatScreen());
             },
             icon: const Icon(Icons.telegram),
           )
