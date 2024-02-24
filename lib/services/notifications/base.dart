@@ -4,6 +4,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:softec_app/models/notification.dart';
+import 'package:softec_app/repositories/notification_repo.dart';
+import 'package:softec_app/services/notifications/service.dart';
 import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class NotificationBase {
@@ -48,7 +52,8 @@ class NotificationBase {
     });
   }
 
-  Future<void> sendPushMessage(String token, String body, String title) async {
+  Future<void> sendPushMessage(
+      String uid, String token, String body, String title) async {
     try {
       const serverKey =
           'AAAAFVE7aY0:APA91bGGy9agjDCcdPvsxJ9uBxX-bR24H_-tzdTazzngiwqSuz2b5Zt8HeHOyenYJbxuRcKTyxV3hrih2QB-BFJtHq-MmShXNXk4mK3DIoqPYoBMIJxslf_mnzY5UQIpxDRRrwYaSb5E';
@@ -61,6 +66,10 @@ class NotificationBase {
         },
         body: _constructFCMPayload(token, body, title),
       );
+
+      NotificationRepo()
+          .saveNotification(uid, NotificationModel(title: title, body: body));
+
       debugPrint('FCM request for device sent!');
     } catch (e) {
       debugPrint('------ $e ------');
@@ -74,15 +83,10 @@ class NotificationBase {
   }
 
   void _showFlutterNotification(BuildContext context, RemoteMessage message) {
+    final notiService = Provider.of<NotiService>(context);
     RemoteNotification? notification = message.notification;
+    notiService.saveNoti(NotificationModel(
+        title: notification?.title ?? '', body: notification?.body ?? ''));
     SnackBars.success(context, notification?.body ?? '');
-    // FlutterToast.successToast(notification?.body);
-    // Feel free to add UI according to your preference, I am just using a custom Toast.
   }
-
-  // _showFlutterNotification(BuildContext context, RemoteMessage message) {
-  //   RemoteNotification? notification = message.notification;
-  //   SnackBars.success(context, notification?.body ?? '');
-  //   // Feel free to add UI according to your preference, I am just using a custom Toast.
-  // }
 }
