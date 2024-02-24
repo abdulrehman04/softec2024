@@ -84,8 +84,8 @@ class OtherUserProfile extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            '545 Follower',
-                            style: TextStyle(fontSize: 20),
+                            '${controller.userData.followers.length} Follower',
+                            style: const TextStyle(fontSize: 20),
                           ),
                           // 5.verticalSpace,
                           Divider(
@@ -94,7 +94,9 @@ class OtherUserProfile extends StatelessWidget {
                           5.verticalSpace,
                           AppButton(
                             label: 'Follow',
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.addFollower(context);
+                            },
                             buttonType: ButtonType.borderedSecondary,
                             height: 35,
                           ),

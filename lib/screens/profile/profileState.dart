@@ -59,4 +59,12 @@ class ProfileState extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void addFollower(context) {
+    _db.collection('users').doc(userData.uid).update({
+      'followers': FieldValue.arrayUnion(
+        [Provider.of<AuthService>(context).authData!.uid],
+      ),
+    });
+  }
 }
