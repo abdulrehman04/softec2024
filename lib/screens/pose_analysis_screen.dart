@@ -41,6 +41,7 @@ class PoseAnalysisScreen extends StatelessWidget {
                 onPressed: () {
                   analysisCubit.analysePose(analyticsProvider.inputImage!);
                 },
+                buttonType: ButtonType.borderedSecondary,
               )
             : null,
         body: SingleChildScrollView(
