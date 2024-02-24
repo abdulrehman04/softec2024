@@ -47,9 +47,6 @@ class AgoraManager {
 
   Future<void> initialize() async {
     try {
-      String configString =
-          await rootBundle.loadString('assets/config/config.json');
-      config = jsonDecode(configString);
       appId = '8da25adad1cc4dadb6718a5c65aad093';
       channelName = 'demo';
       localUid = 0;
@@ -157,7 +154,8 @@ class AgoraManager {
     ClientRoleType clientRole = ClientRoleType.clientRoleBroadcaster,
   }) async {
     channelName = (channelName.isEmpty) ? this.channelName : channelName;
-    token = (token.isEmpty) ? config['rtcToken'] : token;
+    // token = (token.isEmpty) ? config['rtcToken'] : token;
+    token = '';
     uid = (uid == -1) ? localUid : uid;
 
     // Set up Agora engine

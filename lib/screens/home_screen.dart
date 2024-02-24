@@ -3,6 +3,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/video_calling/CallPage.dart';
 import 'package:softec_app/screens/video_calling/HomePage.dart';
+import 'package:softec_app/screens/video_calling/agora_manager.dart';
+import 'package:softec_app/screens/video_calling/quickstart.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
@@ -38,14 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Tester',
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CallPage(
-                      channelName: 'please',
-                      isBroadcaster: isBroadcaster,
-                    ),
-                  ));
-              // AppRouter.push(context, MyHomePage());
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SDKQuickstartScreen(
+                    selectedProduct: ProductName.broadcastStreaming,
+                    isBroadcaster: true,
+                  ),
+                ),
+              );
             },
           )
         ],

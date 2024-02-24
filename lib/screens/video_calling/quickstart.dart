@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:softec_app/screens/video_calling/agora_manager.dart';
-import 'package:softec_app/screens/video_calling/ui_helper.dart';
+import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class SDKQuickstartScreen extends StatefulWidget {
   final ProductName selectedProduct;
+  final bool isBroadcaster;
 
-  const SDKQuickstartScreen({Key? key, required this.selectedProduct})
+  const SDKQuickstartScreen(
+      {Key? key, required this.selectedProduct, required this.isBroadcaster})
       : super(key: key);
 
   @override
@@ -17,8 +20,6 @@ class SDKQuickstartScreen extends StatefulWidget {
 class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
   late AgoraManager agoraManager;
   bool isAgoraManagerInitialized = false;
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
 
   // Build UI
   @override
@@ -30,35 +31,51 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
       );
     }
 
-    return MaterialApp(
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('SDK quickstart'),
-          ),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            children: [
-              mainVideoView(), // The main video frame
-              scrollVideoView(), // Scroll view with multiple videos
-              radioButtons(), // Choose host or audience
-              const SizedBox(height: 5),
-              SizedBox(
-                height: 40,
-                child: ElevatedButton(
-                  onPressed:
-                      agoraManager.isJoined ? () => {leave()} : () => {join()},
-                  child: Text(agoraManager.isJoined ? "Leave" : "Join"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Live stream page'),
+      ),
+      body: Stack(
+        children: [
+          mainVideoView(), // The main video frame
+          if (agoraManager.isJoined)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: InkWell(
+                onTap: () async {
+                  await leave();
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Container(
+                  height: 75,
+                  width: 75,
+                  margin: EdgeInsets.only(bottom: 25),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                  child: Icon(
+                    Icons.call_end,
+                    size: 32,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ],
-          )),
+            )
+          // scrollVideoView(), // Scroll view with multiple videos
+          // radioButtons(), // Choose host or audience
+          // const SizedBox(height: 5),
+        ],
+      ),
     );
   }
 
   @override
   void initState() {
     initialize();
+
     super.initState();
   }
 
@@ -74,6 +91,9 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
       initializeUiHelper(agoraManager, setStateCallback);
       isAgoraManagerInitialized = true;
     });
+
+    _handleRadioValueChange(widget.isBroadcaster);
+    join();
   }
 
   Future<void> join() async {
@@ -112,15 +132,21 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
 
       default:
         // Handle unknown event or provide a default case
-        showMessage('Event Name: $eventName, Event Args: $eventArgs');
+
+        showMessage(
+          'Event Name: $eventName, Event Args: $eventArgs',
+          success: true,
+        );
         break;
     }
   }
 
-  showMessage(String message) {
-    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
+  showMessage(String message, {bool success = false}) {
+    // if (success) {
+    SnackBars.success(context, message);
+    // } else {
+    //   SnackBars.failure(context, message);
+    // }
   }
 
   void setStateCallback() {
@@ -146,6 +172,7 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
 
   // Display local video preview
   Widget mainVideoView() {
+    print(_agoraManager.isJoined);
     if (_agoraManager.currentProduct == ProductName.voiceCalling) {
       return Container();
     } else if (_agoraManager.isJoined) {
@@ -155,25 +182,35 @@ class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
       } else if (mainViewUid == -1) {
         return textContainer("Waiting for a host to join", 240);
       }
-      return Container(
-          height: 240,
-          decoration: BoxDecoration(border: Border.all()),
-          margin: const EdgeInsets.only(bottom: 5),
-          child: Center(
-              child: mainViewUid == 0
-                  ? _agoraManager.localVideoView()
-                  : _agoraManager.remoteVideoView(mainViewUid)));
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: mainViewUid == 0
+              ? _agoraManager.localVideoView()
+              : _agoraManager.remoteVideoView(mainViewUid),
+        ),
+      );
     } else {
-      return textContainer('Join a channel', 240);
+      return textContainer('Live stream is starting', 500);
     }
   }
 
   Widget textContainer(String text, double height) {
     return Container(
-        height: height,
-        decoration: BoxDecoration(border: Border.all()),
-        margin: const EdgeInsets.only(bottom: 5),
-        child: Center(child: Text(text, textAlign: TextAlign.center)));
+      height: height,
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(text, textAlign: TextAlign.center),
+          ),
+          15.verticalSpace,
+          const CircularProgressIndicator(),
+        ],
+      ),
+    );
   }
 
   // Display remote user's video
