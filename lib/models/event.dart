@@ -5,13 +5,16 @@ import 'package:flutter/foundation.dart';
 class Event {
   final String name;
   final String location;
-  final DateTime date;
+  final DateTime startDate;
+  final DateTime endDate;
   final String id;
   final List<String> participants;
+
   Event({
     required this.name,
     required this.location,
-    required this.date,
+    required this.startDate,
+    required this.endDate,
     required this.id,
     required this.participants,
   });
@@ -19,14 +22,16 @@ class Event {
   Event copyWith({
     String? name,
     String? location,
-    DateTime? date,
+    DateTime? startDate,
+    DateTime? endDate,
     String? id,
     List<String>? participants,
   }) {
     return Event(
       name: name ?? this.name,
       location: location ?? this.location,
-      date: date ?? this.date,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
       id: id ?? this.id,
       participants: participants ?? this.participants,
     );
@@ -36,7 +41,8 @@ class Event {
     return <String, dynamic>{
       'name': name,
       'location': location,
-      'date': date.millisecondsSinceEpoch,
+      'startDate': startDate.millisecondsSinceEpoch,
+      'endDate': endDate.millisecondsSinceEpoch,
       'id': id,
       'participants': participants,
     };
@@ -46,7 +52,8 @@ class Event {
     return Event(
       name: map['name'] as String,
       location: map['location'] as String,
-      date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
+      startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate'] as int),
+      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate'] as int),
       id: map['id'] as String,
       participants: List<String>.from((map['participants'] as List<String>)),
     );
@@ -54,31 +61,33 @@ class Event {
 
   String toJson() => json.encode(toMap());
 
-  factory Event.fromJson(String source) =>
-      Event.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Event.fromJson(String source) => Event.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Event(name: $name, location: $location, date: $date, id: $id, participants: $participants)';
+    return 'Event(name: $name, location: $location, startDate: $startDate, endDate: $endDate, id: $id, participants: $participants)';
   }
 
   @override
   bool operator ==(covariant Event other) {
     if (identical(this, other)) return true;
-
-    return other.name == name &&
-        other.location == location &&
-        other.date == date &&
-        other.id == id &&
-        listEquals(other.participants, participants);
+  
+    return 
+      other.name == name &&
+      other.location == location &&
+      other.startDate == startDate &&
+      other.endDate == endDate &&
+      other.id == id &&
+      listEquals(other.participants, participants);
   }
 
   @override
   int get hashCode {
     return name.hashCode ^
-        location.hashCode ^
-        date.hashCode ^
-        id.hashCode ^
-        participants.hashCode;
+      location.hashCode ^
+      startDate.hashCode ^
+      endDate.hashCode ^
+      id.hashCode ^
+      participants.hashCode;
   }
 }

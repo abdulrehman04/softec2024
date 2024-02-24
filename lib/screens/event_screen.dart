@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
+import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/add_event/add_event.dart';
 import 'package:softec_app/services/event.dart';
 
 class EventScreen extends StatelessWidget {
@@ -13,6 +15,12 @@ class EventScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Events'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          AppRouter.push(context, const AddEventScreen());
+        },
+        child: const Icon(Icons.add),
       ),
       body: eventsP.isFetchingEvents
           ? const Center(child: CircularProgressIndicator())

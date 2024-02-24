@@ -9,7 +9,8 @@ class EventRepo {
   Future<void> saveEvent(
     String name,
     String location,
-    DateTime date,
+    DateTime startDate,
+    DateTime endDate,
     String id,
     List<String> participants,
   ) async {
@@ -17,12 +18,13 @@ class EventRepo {
       final event = Event(
         name: name,
         location: location,
-        date: date,
+        startDate: startDate,
+        endDate: endDate,
         id: id,
         participants: participants,
       ).toMap();
 
-      await _firestore.collection('events').add(event);
+      await _firestore.collection('events').doc(id).set(event);
     } catch (e) {
       throw Exception('Internal server error');
     }
