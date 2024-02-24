@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
               ...observers,
               NavigationHistoryObserver(),
             ],
-            // initialRoute: 'login',
-            home: PoseAnalysisScreen(),
+            initialRoute: 'login',
+            // home: PoseAnalysisScreen(),
           ),
         );
       },
