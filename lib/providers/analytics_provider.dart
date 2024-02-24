@@ -7,10 +7,10 @@ class AnalyticsProvider with ChangeNotifier {
   bool picked = false;
   InputImage? inputImage;
 
-  void pickImage() async {
+  void pickImage(ImageSource source) async {
     final imagePicker = ImagePicker();
     image = await imagePicker.pickImage(
-      source: ImageSource.gallery,
+      source: source,
       imageQuality: 40,
       maxHeight: 900,
       maxWidth: 900,
