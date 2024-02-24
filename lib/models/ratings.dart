@@ -4,7 +4,7 @@ class Rating {
   final String name;
   final int rating;
   final String review;
-  
+
   Rating({
     required this.name,
     required this.rating,
@@ -32,6 +32,7 @@ class Rating {
   }
 
   factory Rating.fromMap(Map<String, dynamic> map) {
+    print(map);
     return Rating(
       name: map['name'] as String,
       rating: map['rating'] as int,
@@ -41,7 +42,8 @@ class Rating {
 
   String toJson() => json.encode(toMap());
 
-  factory Rating.fromJson(String source) => Rating.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Rating.fromJson(String source) =>
+      Rating.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'Rating(name: $name, rating: $rating, review: $review)';
@@ -49,11 +51,10 @@ class Rating {
   @override
   bool operator ==(covariant Rating other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.name == name &&
-      other.rating == rating &&
-      other.review == review;
+
+    return other.name == name &&
+        other.rating == rating &&
+        other.review == review;
   }
 
   @override

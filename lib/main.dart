@@ -9,6 +9,7 @@ import 'package:softec_app/cubits/chat/cubit.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/posts/posts.dart';
+import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/services/auth.dart';
 import 'configs/configs.dart' as theme;
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (_) => AuthService()),
             ChangeNotifierProvider(create: (_) => PostState()),
+            ChangeNotifierProvider(create: (_) => ProfileState()),
             BlocProvider(create: (_) => ChatCubit())
           ],
           child: MaterialApp(
