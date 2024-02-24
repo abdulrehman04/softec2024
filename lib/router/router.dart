@@ -4,7 +4,7 @@ import 'package:softec_app/screens/notifications_screen.dart';
 import 'package:softec_app/screens/posts/posts.dart';
 import 'package:softec_app/screens/profile_screen.dart';
 import 'package:softec_app/screens/register/register.dart';
-import 'package:softec_app/screens/search_screen.dart';
+import 'package:softec_app/screens/search_screen/search_screen.dart';
 
 Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {

@@ -7,7 +7,7 @@ class CreatePost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
+    return const FormBuilder(
       child: AppTextField(name: 'name'),
     );
   }
