@@ -13,6 +13,7 @@ import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/pose_analysis_screen.dart';
 import 'package:softec_app/screens/posts/posts.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
+import 'package:softec_app/screens/search_screen/search_screen.dart';
 import 'package:softec_app/services/auth.dart';
 import 'configs/configs.dart' as theme;
 
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => PoseAnalysisCubit()),
             ChangeNotifierProvider(create: (_) => PostState()),
             ChangeNotifierProvider(create: (_) => ProfileState()),
+            ChangeNotifierProvider(create: (_) => SearchState()),
             BlocProvider(create: (_) => ChatCubit())
           ],
           child: MaterialApp(
