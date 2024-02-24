@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/models/auth_data.dart';
+import 'package:softec_app/models/ratings.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/services/image_picker.dart';
 import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
@@ -63,8 +64,50 @@ class ProfileState extends ChangeNotifier {
   void addFollower(context) {
     _db.collection('users').doc(userData.uid).update({
       'followers': FieldValue.arrayUnion(
-        [Provider.of<AuthService>(context).authData!.uid],
+        [Provider.of<AuthService>(context, listen: false).authData!.uid],
       ),
     });
+
+    userData.followers.add(
+      Provider.of<AuthService>(context, listen: false).authData!.uid,
+    );
+    notifyListeners();
+  }
+
+  void removeFollower(context) {
+    _db.collection('users').doc(userData.uid).update({
+      'followers': FieldValue.arrayRemove(
+        [Provider.of<AuthService>(context, listen: false).authData!.uid],
+      ),
+    });
+
+    userData.followers.remove(
+      Provider.of<AuthService>(context, listen: false).authData!.uid,
+    );
+    notifyListeners();
+  }
+
+  void addReview(context, int rating, String review) {
+    AuthData currentUser = Provider.of<AuthService>(
+      context,
+      listen: false,
+    ).authData!;
+
+    _db.collection('users').doc(userData.uid).update({
+      'reviews': FieldValue.arrayUnion(
+        [
+          {
+            'name': currentUser.fullname,
+            'rating': rating,
+            'review': review,
+          }
+        ],
+      ),
+    });
+
+    userData.ratings!.add(
+      Rating(name: currentUser.fullname, rating: rating, review: review),
+    );
+    notifyListeners();
   }
 }

@@ -9,6 +9,7 @@ import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/screens/profile/profile_reviews.dart';
 import 'package:softec_app/screens/profile/widgets/usertype_row.dart';
 import 'package:softec_app/services/auth.dart';
+import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
 
@@ -20,6 +21,7 @@ class OtherUserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileState controller = Provider.of<ProfileState>(context);
+    AuthData userData = Provider.of<AuthService>(context).authData!;
     controller.init(context, user);
     return Scaffold(
       appBar: AppBar(
@@ -84,8 +86,8 @@ class OtherUserProfile extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            '${controller.userData.followers.length} Follower',
-                            style: const TextStyle(fontSize: 20),
+                            '${controller.userData.followers.length} Follower   |   ${controller.userData.ratings!.length} Ratings',
+                            style: const TextStyle(fontSize: 13),
                           ),
                           // 5.verticalSpace,
                           Divider(
@@ -93,11 +95,22 @@ class OtherUserProfile extends StatelessWidget {
                           ),
                           5.verticalSpace,
                           AppButton(
-                            label: 'Follow',
+                            label: controller.userData.followers
+                                    .contains(userData.uid)
+                                ? 'Following'
+                                : 'Follow',
                             onPressed: () {
-                              controller.addFollower(context);
+                              if (controller.userData.followers
+                                  .contains(userData.uid)) {
+                                controller.removeFollower(context);
+                              } else {
+                                controller.addFollower(context);
+                              }
                             },
-                            buttonType: ButtonType.borderedSecondary,
+                            buttonType: controller.userData.followers
+                                    .contains(userData.uid)
+                                ? ButtonType.secondary
+                                : ButtonType.borderedSecondary,
                             height: 35,
                           ),
                         ],
@@ -143,9 +156,89 @@ class OtherUserProfile extends StatelessWidget {
                 ),
                 25.verticalSpace,
                 AppButton(
-                  label: 'View all Reviews',
+                  label: 'Give review',
                   onPressed: () {
-                    AppRouter.push(context, const ProfileReviews());
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        int stars = 0;
+                        TextEditingController review = TextEditingController();
+                        return StatefulBuilder(
+                          builder: (context, sst) {
+                            return Dialog(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: SizedBox(
+                                  height: 300,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Add review',
+                                        style: TextStyle(fontSize: 25),
+                                      ),
+                                      15.verticalSpace,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [1, 2, 3, 4, 5].map((e) {
+                                          return InkWell(
+                                            onTap: () {
+                                              sst(() {
+                                                stars = e;
+                                              });
+                                            },
+                                            child: Icon(
+                                              Icons.star,
+                                              color: stars >= e
+                                                  ? Colors.yellow[800]
+                                                  : Colors.grey,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                      15.verticalSpace,
+                                      TextField(
+                                        controller: review,
+                                        decoration: const InputDecoration(
+                                          hintText: 'Add remarks',
+                                          border: OutlineInputBorder(),
+                                        ),
+                                      ),
+                                      35.verticalSpace,
+                                      AppButton(
+                                        label: 'Submit',
+                                        onPressed: () {
+                                          if (review.text.trim() != '') {
+                                            controller.addReview(
+                                              context,
+                                              stars,
+                                              review.text.trim(),
+                                            );
+                                            Navigator.pop(context);
+                                            SnackBars.success(
+                                              context,
+                                              'Review added successfully',
+                                            );
+                                          } else {
+                                            SnackBars.failure(
+                                              context,
+                                              'Please write a review',
+                                            );
+                                          }
+                                        },
+                                        buttonType: ButtonType.secondary,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
                   },
                   buttonType: ButtonType.borderedSecondary,
                 ),
