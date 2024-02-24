@@ -1,51 +1,43 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
+import 'package:softec_app/models/auth_data.dart';
+import 'package:softec_app/models/post_model.dart';
+import 'package:softec_app/repositories/posts_repo.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/chat/chat.dart';
+import 'package:softec_app/screens/posts/create_post/create_post.dart';
 import 'package:softec_app/screens/posts/widgets/post_item.dart';
+import 'package:softec_app/services/auth.dart';
+import 'package:softec_app/services/image_picker.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
+import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
+part 'widgets/_body.dart';
 part '_state.dart';
 
-class Posts extends StatelessWidget {
+class Posts extends StatefulWidget {
   const Posts({super.key});
 
   @override
+  State<Posts> createState() => _PostsState();
+}
+
+class _PostsState extends State<Posts> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    PostState controller = Provider.of<PostState>(context, listen: false);
+    if (controller.posts.isEmpty) {
+      controller.fetchAllPosts();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Method'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              AppRouter.push(context, const ChatScreen());
-            },
-            icon: const Icon(Icons.telegram),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(
-          Icons.chat,
-          size: 30,
-          color: AppTheme.c.primary,
-        ),
-      ),
-      bottomNavigationBar: const BottomBar(),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return const PostItem(
-            name: 'Shafeqqq',
-            post:
-                'https://www.hellolittlebirdiestore.com.au/cdn/shop/files/mushie-fabric-dummy-clip-blush-hello-little-birdie-2.jpg?v=1687173428',
-            title:
-                'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.',
-          );
-        },
-      ),
-    );
+    return const _Body();
   }
 }
