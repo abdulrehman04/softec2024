@@ -55,4 +55,19 @@ class AuthRepo {
       throw Exception('Internal server error');
     }
   }
+
+  static Future<List<AuthData>> fetchAllUsers() async {
+    try {
+      final users = await _firestore.collection('users').get();
+
+      final data = users.docs
+          .map((e) => AuthData.fromMap(e.data()))
+          .toList();
+
+      return data;
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Exception('Internal server error');
+    }
+  }
 }

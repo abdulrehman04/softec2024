@@ -37,4 +37,23 @@ class AuthService extends ChangeNotifier {
       rethrow;
     }
   }
+
+  List<AuthData>? allUsers;
+  bool isFetchingUsers = false;
+
+  Future<void> fetchAllUsers() async {
+    try {
+      isFetchingUsers = true;
+      notifyListeners();
+
+      allUsers = await AuthRepo.fetchAllUsers();
+      isFetchingUsers = false;
+      notifyListeners();
+    } catch (e) {
+      isFetchingUsers = false;
+      notifyListeners();
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
 }
