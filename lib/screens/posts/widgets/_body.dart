@@ -8,7 +8,6 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  
   @override
   void initState() {
     super.initState();
@@ -45,6 +44,12 @@ class _BodyState extends State<_Body> {
             onPressed: () {
               AppRouter.push(context, CreatePost());
             },
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            tooltip: 'Add Event',
+            child: const Icon(Icons.event),
+            onPressed: () {},
           ),
           FloatingActionButton.small(
             heroTag: null,
