@@ -7,17 +7,17 @@ import 'package:softec_app/models/ratings.dart';
 class AuthData {
   final String email;
   final String password;
-  final String name;
+  final String fullname;
   final String uid;
   final bool isProfessional;
   final String experties;
   final String focus;
   final List<Rating> ratings;
-  
+
   AuthData({
     required this.email,
     required this.password,
-    required this.name,
+    required this.fullname,
     required this.uid,
     required this.isProfessional,
     required this.experties,
@@ -28,7 +28,7 @@ class AuthData {
   AuthData copyWith({
     String? email,
     String? password,
-    String? name,
+    String? fullname,
     String? uid,
     bool? isProfessional,
     String? experties,
@@ -38,7 +38,7 @@ class AuthData {
     return AuthData(
       email: email ?? this.email,
       password: password ?? this.password,
-      name: name ?? this.name,
+      fullname: fullname ?? this.fullname,
       uid: uid ?? this.uid,
       isProfessional: isProfessional ?? this.isProfessional,
       experties: experties ?? this.experties,
@@ -51,7 +51,7 @@ class AuthData {
     return <String, dynamic>{
       'email': email,
       'password': password,
-      'name': name,
+      'fullname': fullname,
       'uid': uid,
       'isProfessional': isProfessional,
       'experties': experties,
@@ -64,7 +64,7 @@ class AuthData {
     return AuthData(
       email: map['email'] as String,
       password: map['password'] as String,
-      name: map['name'] as String,
+      fullname: map['fullname'] as String,
       uid: map['uid'] as String,
       isProfessional: map['isProfessional'] as bool,
       experties: map['experties'] as String,
@@ -79,7 +79,7 @@ class AuthData {
 
   @override
   String toString() {
-    return 'AuthData(email: $email, password: $password, name: $name, uid: $uid, isProfessional: $isProfessional, experties: $experties, focus: $focus, ratings: $ratings)';
+    return 'AuthData(email: $email, password: $password, fullname: $fullname, uid: $uid, isProfessional: $isProfessional, experties: $experties, focus: $focus, ratings: $ratings)';
   }
 
   @override
@@ -89,7 +89,7 @@ class AuthData {
     return 
       other.email == email &&
       other.password == password &&
-      other.name == name &&
+      other.fullname == fullname &&
       other.uid == uid &&
       other.isProfessional == isProfessional &&
       other.experties == experties &&
@@ -101,7 +101,7 @@ class AuthData {
   int get hashCode {
     return email.hashCode ^
       password.hashCode ^
-      name.hashCode ^
+      fullname.hashCode ^
       uid.hashCode ^
       isProfessional.hashCode ^
       experties.hashCode ^
