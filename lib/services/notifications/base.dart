@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
+import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class NotificationBase {
   static Future init(
@@ -64,4 +66,23 @@ class NotificationBase {
       debugPrint('------ $e ------');
     }
   }
+
+  Future<void> listenNotifications(BuildContext context) async {
+    FirebaseMessaging.onMessage.listen((event) {
+      _showFlutterNotification(context, event);
+    });
+  }
+
+  void _showFlutterNotification(BuildContext context, RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    SnackBars.success(context, notification?.body ?? '');
+    // FlutterToast.successToast(notification?.body);
+    // Feel free to add UI according to your preference, I am just using a custom Toast.
+  }
+
+  // _showFlutterNotification(BuildContext context, RemoteMessage message) {
+  //   RemoteNotification? notification = message.notification;
+  //   SnackBars.success(context, notification?.body ?? '');
+  //   // Feel free to add UI according to your preference, I am just using a custom Toast.
+  // }
 }

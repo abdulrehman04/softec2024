@@ -52,19 +52,22 @@ class _Body extends StatelessWidget {
                 AppButton(
                   label: 'Login',
                   onPressed: () async {
-                    final form = screenState.formKey.currentState!;
-                    final isValid = form.saveAndValidate();
-                    if (!isValid) return;
-                    Map<String, dynamic> payload = form.value;
-                    await authService.login(
-                      payload,
-                    );
+                    // final form = screenState.formKey.currentState!;
+                    // final isValid = form.saveAndValidate();
+                    // if (!isValid) return;
+                    // Map<String, dynamic> payload = form.value;
+                    // await authService.login(
+                    //   payload,
+                    // );
 
-                    if (authService.authData != null) {
-                      if (!context.mounted) return;
-                      'home'.push(context);
-                    }
-
+                    // if (authService.authData != null) {
+                    //   if (!context.mounted) return;
+                    //   'home'.push(context);
+                    // }
+                    NotificationBase().sendPushMessage(
+                        'eEcpn9aKRp60Ein2B-YrST:APA91bFCpSWjfcD6B6i7ymVz5wvKFf5SHR4LrIuShxubgh8fK_y4j7Qk1WHJBRnjELlgxGuOv7Hh76M4O1LjCIvxpb9IkGmGJgNbjk0WKOatCfbr7f81xFPjhrKLVE1WyUJa-OVMI84b',
+                        'this is a body',
+                        'title');
                     // NotificationBase.showBigTextNotification(title: 'title', body: 'body', fln: FlutterLocalNotificationsPlugin());
                   },
                   buttonType: ButtonType.borderedSecondary,

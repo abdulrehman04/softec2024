@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
             title: 'Softec 2024',
             builder: (context, child) {
               App.init(context);
-
+              final notificationService = NotificationBase();
+              notificationService.listenNotifications(context);
               return child!;
             },
             theme: theme.themeDark,
