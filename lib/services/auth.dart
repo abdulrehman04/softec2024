@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/repositories/auth_repo.dart';
@@ -27,7 +28,12 @@ class AuthService extends ChangeNotifier {
       isLoginLoading = true;
       notifyListeners();
 
+      final deviceToken = await FirebaseMessaging.instance.getToken();
+
       authData = await AuthRepo.loginUser(payload);
+      await AuthRepo.setToken(authData!.uid, deviceToken ?? '');
+      authData!.deviceToken = deviceToken;
+
       isLoginLoading = false;
       notifyListeners();
     } catch (e) {

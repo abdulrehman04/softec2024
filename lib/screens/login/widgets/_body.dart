@@ -55,15 +55,17 @@ class _Body extends StatelessWidget {
                     final form = screenState.formKey.currentState!;
                     final isValid = form.saveAndValidate();
                     if (!isValid) return;
-
+                    Map<String, dynamic> payload = form.value;
                     await authService.login(
-                      form.value,
+                      payload,
                     );
 
                     if (authService.authData != null) {
                       if (!context.mounted) return;
                       'home'.push(context);
                     }
+
+                    // NotificationBase.showBigTextNotification(title: 'title', body: 'body', fln: FlutterLocalNotificationsPlugin());
                   },
                   buttonType: ButtonType.borderedSecondary,
                 ),

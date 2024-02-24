@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +11,10 @@ import 'package:softec_app/cubits/pose_analysis/pose_analysis_cubit.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/providers/analytics_provider.dart';
 import 'package:softec_app/router/router.dart';
-import 'package:softec_app/screens/pose_analysis_screen.dart';
 import 'package:softec_app/screens/posts/posts.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/services/auth.dart';
+import 'package:softec_app/services/notifications/base.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -21,6 +22,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  NotificationBase.init(flutterLocalNotificationsPlugin);
   runApp(const MyApp());
 }
 
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
             title: 'Softec 2024',
             builder: (context, child) {
               App.init(context);
+
               return child!;
             },
             theme: theme.themeDark,

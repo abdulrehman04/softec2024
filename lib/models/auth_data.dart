@@ -14,6 +14,8 @@ class AuthData {
   final String domain;
   final String focus;
   final List<Rating>? ratings;
+  String? deviceToken;
+
   AuthData({
     required this.email,
     required this.fullname,
@@ -23,6 +25,7 @@ class AuthData {
     required this.domain,
     required this.focus,
     this.ratings,
+    this.deviceToken,
   });
 
   AuthData copyWith({
@@ -34,6 +37,7 @@ class AuthData {
     String? domain,
     String? focus,
     List<Rating>? ratings,
+    String? deviceToken,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -44,6 +48,7 @@ class AuthData {
       domain: domain ?? this.domain,
       focus: focus ?? this.focus,
       ratings: ratings ?? this.ratings,
+      deviceToken: deviceToken ?? this.deviceToken,
     );
   }
 
@@ -56,12 +61,12 @@ class AuthData {
       'isProfessional': isProfessional,
       'domain': domain,
       'focus': focus,
-      'ratings': (ratings ?? []).map((x) => x?.toMap()).toList(),
+      'ratings': (ratings ?? []).map((x) => x.toMap()).toList(),
+      'deviceToken': deviceToken ?? '',
     };
   }
 
   factory AuthData.fromMap(Map<String, dynamic> map) {
-    print(map);
     return AuthData(
       email: map['email'] as String,
       fullname: map['fullname'] as String,
@@ -77,6 +82,7 @@ class AuthData {
               ),
             )
           : [],
+      deviceToken: map['deviceToken'] as String? ?? '',
     );
   }
 
@@ -101,7 +107,8 @@ class AuthData {
         other.isProfessional == isProfessional &&
         other.domain == domain &&
         other.focus == focus &&
-        listEquals(other.ratings, ratings);
+        listEquals(other.ratings, ratings) &&
+        other.deviceToken == deviceToken;
   }
 
   @override
@@ -113,6 +120,7 @@ class AuthData {
         isProfessional.hashCode ^
         domain.hashCode ^
         focus.hashCode ^
-        ratings.hashCode;
+        ratings.hashCode ^
+        deviceToken.hashCode;
   }
 }
