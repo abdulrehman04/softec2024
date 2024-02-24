@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +15,11 @@ class AnalyticsProvider with ChangeNotifier {
     if (image == null) return;
     picked = true;
     inputImage = InputImage.fromFilePath(image!.path);
+    print(inputImage!.type.name);
+
+
+    // print(inputImage!.metadata?.size);
+    // print(inputImage!.metadata?.rotation);
     notifyListeners();
   }
 

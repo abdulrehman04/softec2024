@@ -10,13 +10,13 @@ class PoseAnalysisCubit extends Cubit<PoseAnalysisState> {
   PoseAnalysisCubit() : super(PoseAnalysisInitial());
 
   Future<void> analysePose(InputImage image) async {
-    emit(PoseAnalysisLoading());
+    emit(const PoseAnalysisLoading());
     try {
       final List<Pose> poses = await AnalysisLayer().processImage(image);
       if (poses.isEmpty) {
         emit(const PoseAnalysisFailure(message: 'No pose detected'));
       } else {
-        emit(PoseAnalysisSuccess());
+        emit(PoseAnalysisSuccess(poses: poses));
       }
     } catch (e) {
       emit(PoseAnalysisFailure(message: e.toString()));

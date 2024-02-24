@@ -15,13 +15,14 @@ class AnalysisLayer {
           final type = landmark.type;
           final x = landmark.x;
           final y = landmark.y;
+          final z = landmark.z;
 
-          print('Landmark type: $type, x: $x, y: $y');
+          // print('Landmark type: $type, x: $x, y: $y, z: $z');
         });
 
         // to access specific landmarks
         final landmark = pose.landmarks[PoseLandmarkType.nose];
-        print(landmark);
+        // print(landmark);
       }
 
       return poses;
