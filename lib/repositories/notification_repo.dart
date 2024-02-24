@@ -19,4 +19,20 @@ class NotificationRepo {
       throw Exception('Internal server error');
     }
   }
+
+  Future<List<NotificationModel>> getNotifications() async {
+    final uid = _auth.currentUser!.uid;
+    try {
+      final doc = await _firestore.collection('users').doc(uid).get();
+      final data = doc.data() as Map<String, dynamic>;
+      final notis = data['notifications'] as List<dynamic>?;
+      return notis != null
+          ? notis
+              .map((e) => NotificationModel.fromMap(e as Map<String, dynamic>))
+              .toList()
+          : [];
+    } catch (e) {
+      throw Exception('Internal server error');
+    }
+  }
 }

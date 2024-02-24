@@ -12,6 +12,7 @@ import 'package:softec_app/screens/posts/create_post/create_post.dart';
 import 'package:softec_app/screens/posts/widgets/post_item.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/services/image_picker.dart';
+import 'package:softec_app/services/notifications/service.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 

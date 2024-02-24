@@ -15,6 +15,7 @@ import 'package:softec_app/screens/posts/posts.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/services/notifications/base.dart';
+import 'package:softec_app/services/notifications/service.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => PoseAnalysisCubit()),
             ChangeNotifierProvider(create: (_) => PostState()),
             ChangeNotifierProvider(create: (_) => ProfileState()),
-            BlocProvider(create: (_) => ChatCubit())
+            BlocProvider(create: (_) => ChatCubit()),
+            ChangeNotifierProvider(create: (_) => NotiService())
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:softec_app/models/notification.dart';
 
 import 'package:softec_app/models/ratings.dart';
 
@@ -15,6 +16,7 @@ class AuthData {
   final String focus;
   final List<Rating>? ratings;
   String? deviceToken;
+  List<NotificationModel>? notis;
 
   AuthData({
     required this.email,
@@ -26,6 +28,7 @@ class AuthData {
     required this.focus,
     this.ratings,
     this.deviceToken,
+    this.notis,
   });
 
   AuthData copyWith({
@@ -38,6 +41,7 @@ class AuthData {
     String? focus,
     List<Rating>? ratings,
     String? deviceToken,
+    List<NotificationModel>? notis,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -49,6 +53,7 @@ class AuthData {
       focus: focus ?? this.focus,
       ratings: ratings ?? this.ratings,
       deviceToken: deviceToken ?? this.deviceToken,
+      notis: notis ?? this.notis,
     );
   }
 
@@ -63,27 +68,34 @@ class AuthData {
       'focus': focus,
       'ratings': (ratings ?? []).map((x) => x.toMap()).toList(),
       'deviceToken': deviceToken ?? '',
+      'notis': (notis ?? []).map((e) => e.toMap()).toList()
     };
   }
 
   factory AuthData.fromMap(Map<String, dynamic> map) {
     return AuthData(
-      email: map['email'] as String,
-      fullname: map['fullname'] as String,
-      profilePicture: (map['profilePicture'] ?? '') as String,
-      uid: map['uid'] as String,
-      isProfessional: map['isProfessional'] as bool,
-      domain: map['domain'] as String,
-      focus: map['focus'] as String,
-      ratings: map['ratings'] != null
-          ? List<Rating>.from(
-              (map['ratings'] as List).map<Rating?>(
-                (x) => Rating.fromMap(x as Map<String, dynamic>),
-              ),
-            )
-          : [],
-      deviceToken: map['deviceToken'] as String? ?? '',
-    );
+        email: map['email'] as String,
+        fullname: map['fullname'] as String,
+        profilePicture: (map['profilePicture'] ?? '') as String,
+        uid: map['uid'] as String,
+        isProfessional: map['isProfessional'] as bool,
+        domain: map['domain'] as String,
+        focus: map['focus'] as String,
+        ratings: map['ratings'] != null
+            ? List<Rating>.from(
+                (map['ratings'] as List).map<Rating?>(
+                  (x) => Rating.fromMap(x as Map<String, dynamic>),
+                ),
+              )
+            : [],
+        deviceToken: map['deviceToken'] as String? ?? '',
+        notis: map['notis'] != null
+            ? List<NotificationModel>.from(
+                (map['notis'] as List).map<NotificationModel?>(
+                  (e) => NotificationModel.fromMap(e as Map<String, dynamic>),
+                ),
+              )
+            : []);
   }
 
   String toJson() => json.encode(toMap());
@@ -108,7 +120,8 @@ class AuthData {
         other.domain == domain &&
         other.focus == focus &&
         listEquals(other.ratings, ratings) &&
-        other.deviceToken == deviceToken;
+        other.deviceToken == deviceToken &&
+        other.notis == notis;
   }
 
   @override
@@ -121,6 +134,7 @@ class AuthData {
         domain.hashCode ^
         focus.hashCode ^
         ratings.hashCode ^
-        deviceToken.hashCode;
+        deviceToken.hashCode ^
+        notis.hashCode;
   }
 }

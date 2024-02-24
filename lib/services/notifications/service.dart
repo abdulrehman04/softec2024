@@ -9,7 +9,16 @@ class NotiService with ChangeNotifier {
 
   void saveNoti(NotificationModel noti) {
     isSavingNoti = true;
+    notifyListeners();
     allNoti.add(noti);
+    isSavingNoti = false;
+    notifyListeners();
+  }
+
+  void pullNotis() async {
+    isSavingNoti = true;
+    allNoti = await repo.getNotifications();
+    isSavingNoti = false;
     notifyListeners();
   }
 }
