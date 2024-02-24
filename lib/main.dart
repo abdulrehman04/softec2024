@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
+import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
+import 'package:softec_app/cubits/chat/cubit.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/router/router.dart';
-// import 'package:softec_app/screens/home_screen.dart';
+import 'package:softec_app/services/auth.dart';
 import 'configs/configs.dart' as theme;
 
 void main() async {
@@ -26,27 +29,28 @@ class MyApp extends StatelessWidget {
       designSize: const Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
-      // child: const HomeScreen(),
-      // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         final List<NavigatorObserver> observers = [];
-        // App.init(context);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'First Method',
-          builder: (context, child) {
-            App.init(context);
-            return child!;
-          },
-          theme: theme.themeDark,
-          onGenerateRoute: onGenerateRoutes,
-          navigatorObservers: [
-            ...observers,
-            NavigationHistoryObserver(),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => AuthService()),
+            BlocProvider(create: (_) => ChatCubit())
           ],
-          initialRoute: 'home',
-          // You can use the library anywhere in the app even in theme
-          // home: const HomeScreen(),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Softec 2024',
+            builder: (context, child) {
+              App.init(context);
+              return child!;
+            },
+            theme: theme.themeDark,
+            onGenerateRoute: onGenerateRoutes,
+            navigatorObservers: [
+              ...observers,
+              NavigationHistoryObserver(),
+            ],
+            initialRoute: 'login',
+          ),
         );
       },
       // child: const HomePage(title: 'First Method'),
