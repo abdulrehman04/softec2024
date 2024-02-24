@@ -14,6 +14,7 @@ class AuthData {
   final String domain;
   final String focus;
   final List<Rating>? ratings;
+  final List<String> followers;
   AuthData({
     required this.email,
     required this.fullname,
@@ -23,6 +24,7 @@ class AuthData {
     required this.domain,
     required this.focus,
     this.ratings,
+    required this.followers,
   });
 
   AuthData copyWith({
@@ -34,6 +36,7 @@ class AuthData {
     String? domain,
     String? focus,
     List<Rating>? ratings,
+    List<String>? followers,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -44,6 +47,7 @@ class AuthData {
       domain: domain ?? this.domain,
       focus: focus ?? this.focus,
       ratings: ratings ?? this.ratings,
+      followers: followers ?? this.followers,
     );
   }
 
@@ -57,13 +61,14 @@ class AuthData {
       'domain': domain,
       'focus': focus,
       'ratings': (ratings ?? []).map((x) => x?.toMap()).toList(),
+      'followers': followers,
     };
   }
 
   factory AuthData.fromMap(Map<String, dynamic> map) {
-    print(map);
     return AuthData(
       email: map['email'] as String,
+      followers: map['followers'] ?? [],
       fullname: map['fullname'] as String,
       profilePicture: (map['profilePicture'] ?? '') as String,
       uid: map['uid'] as String,

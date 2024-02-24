@@ -5,7 +5,6 @@ import 'package:softec_app/repositories/auth_repo.dart';
 class AuthService extends ChangeNotifier {
   bool isRegisterLoading = false;
   AuthData? authData;
-  // List<AuthData> allUsers = [];
   Future<void> register(Map<String, dynamic> payload) async {
     try {
       isRegisterLoading = true;

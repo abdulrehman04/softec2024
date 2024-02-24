@@ -31,7 +31,6 @@ class Posts extends StatefulWidget {
 class _PostsState extends State<Posts> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     PostState controller = Provider.of<PostState>(context, listen: false);
     if (controller.posts.isEmpty) {

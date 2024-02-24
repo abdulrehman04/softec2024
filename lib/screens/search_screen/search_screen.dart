@@ -9,6 +9,7 @@ import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/models/chat/chat_meta.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/all_users.dart';
+import 'package:softec_app/screens/profile/other_user_profile.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
