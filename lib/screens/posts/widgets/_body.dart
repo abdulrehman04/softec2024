@@ -51,7 +51,9 @@ class _BodyState extends State<_Body> {
             heroTag: null,
             tooltip: 'Add Event',
             child: const Icon(Icons.event),
-            onPressed: () {},
+            onPressed: () {
+              AppRouter.push(context, const EventScreen());
+            },
           ),
           FloatingActionButton.small(
             heroTag: null,
