@@ -68,4 +68,16 @@ class AuthRepo {
       throw Exception('Internal server error');
     }
   }
+
+  static Future<void> setToken(String uid, String token) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(uid)
+          .set({'deviceToken': token}, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Exception('Internal server error');
+    }
+  }
 }
