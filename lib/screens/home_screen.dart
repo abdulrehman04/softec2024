@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/video_calling/CallPage.dart';
+import 'package:softec_app/screens/video_calling/HomePage.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 import 'package:softec_app/widgets/design/buttons/app_button.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  static final _formKey = GlobalKey<FormBuilderState>();
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isBroadcaster = true;
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +26,26 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: const BottomBar(),
       body: Column(
         children: [
-          Center(
-            child: FormBuilder(
-              key: _formKey,
-              child: AppTextField(
-                name: '',
-                validator: (v) {
-                  if (v != null) {
-                    if (v.length == 1) {
-                      return "hehehe";
-                    }
-                  }
-                  return null;
-                },
-              ),
-            ),
+          Switch(
+            value: isBroadcaster,
+            onChanged: (value) {
+              setState(() {
+                isBroadcaster = value;
+              });
+            },
           ),
           AppButton(
             label: 'Tester',
             onPressed: () {
-              final form = _formKey.currentState!;
-              form.saveAndValidate();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CallPage(
+                      channelName: 'please',
+                      isBroadcaster: isBroadcaster,
+                    ),
+                  ));
+              // AppRouter.push(context, MyHomePage());
             },
           )
         ],

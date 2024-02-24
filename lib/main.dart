@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
       // child: const HomeScreen(),
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
-        final navigatorKey = GlobalKey<NavigatorState>();
         final List<NavigatorObserver> observers = [];
         // App.init(context);
         return MaterialApp(
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
           },
           theme: theme.themeDark,
           onGenerateRoute: onGenerateRoutes,
-          navigatorKey: navigatorKey,
           navigatorObservers: [
             ...observers,
             NavigationHistoryObserver(),
