@@ -52,11 +52,15 @@ class _BodyState extends State<_Body> {
                           itemCount: screenState.filteredUsers.length,
                           itemBuilder: (context, index) {
                             final chat = screenState.filteredUsers[index];
-
                             return ListTile(
                               leading: const Icon(Icons.person),
                               title: Text(chat.fullname),
-                              onTap: () {},
+                              onTap: () {
+                                AppRouter.push(
+                                  context,
+                                  OtherUserProfile(user: chat),
+                                );
+                              },
                             );
                           },
                         ),

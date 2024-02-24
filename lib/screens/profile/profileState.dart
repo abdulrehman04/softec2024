@@ -17,11 +17,8 @@ class ProfileState extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-
-  init(context) {
-    userData = Provider.of<AuthService>(context).authData!;
+  init(context, AuthData user) {
+    userData = user;
   }
 
   Future pickImage(context) async {
