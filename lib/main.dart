@@ -10,6 +10,7 @@ import 'package:softec_app/cubits/pose_analysis/pose_analysis_cubit.dart';
 import 'package:softec_app/firebase_options.dart';
 import 'package:softec_app/providers/analytics_provider.dart';
 import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/pose_analysis_screen.dart';
 import 'package:softec_app/services/auth.dart';
 import 'configs/configs.dart' as theme;
 
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
               ...observers,
               NavigationHistoryObserver(),
             ],
-            initialRoute: 'login',
+            // initialRoute: 'login',
+            home: PoseAnalysisScreen(),
           ),
         );
       },

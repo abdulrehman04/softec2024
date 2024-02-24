@@ -7,6 +7,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/cubits/pose_analysis/pose_analysis_cubit.dart';
 import 'package:softec_app/painters/pose_painter.dart';
 import 'package:softec_app/providers/analytics_provider.dart';
@@ -30,7 +31,6 @@ class PoseAnalysisScreen extends StatelessWidget {
           title: const Text('Pose Analysis'),
         ),
         floatingActionButtonLocation: ExpandableFab.location,
-
         floatingActionButton: ExpandableFab(
           key: _key,
           overlayStyle: ExpandableFabOverlayStyle(
@@ -57,7 +57,6 @@ class PoseAnalysisScreen extends StatelessWidget {
             ),
           ],
         ),
-
         bottomNavigationBar: analyticsProvider.image != null
             ? AppButton(
                 label: 'Analyze',
@@ -68,40 +67,46 @@ class PoseAnalysisScreen extends StatelessWidget {
               )
             : null,
         body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              if (analyticsProvider.image != null)
-                SizedBox(
-                  height: 350,
-                  width: 350,
-                  child: Image.file(
-                    File(analyticsProvider.image!.path),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              BlocBuilder<PoseAnalysisCubit, PoseAnalysisState>(
-                builder: (context, state) {
-                  if (state is PoseAnalysisSuccess) {
-                    final poses = state.poses;
-                    final painter = PosePainter(
-                      poses!,
-                      const Size(900, 900),
-                      InputImageRotation.rotation90deg,
-                      CameraLensDirection.back,
-                    );
-                    return SizedBox(
+          child: Padding(
+            padding: Space.all(),
+            child: Stack(
+              children: [
+                if (analyticsProvider.image != null)
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
                       height: 350,
                       width: 350,
-                      child: CustomPaint(
-                        painter: painter,
-                        size: const Size(900, 900),
+                      child: Image.file(
+                        File(analyticsProvider.image!.path),
+                        fit: BoxFit.cover,
                       ),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              )
-            ],
+                    ),
+                  ),
+                BlocBuilder<PoseAnalysisCubit, PoseAnalysisState>(
+                  builder: (context, state) {
+                    if (state is PoseAnalysisSuccess) {
+                      final poses = state.poses;
+                      final painter = PosePainter(
+                        poses!,
+                        const Size(900, 900),
+                        InputImageRotation.rotation90deg,
+                        CameraLensDirection.back,
+                      );
+                      return SizedBox(
+                        height: 350,
+                        width: 350,
+                        child: CustomPaint(
+                          painter: painter,
+                          size: const Size(900, 900),
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
