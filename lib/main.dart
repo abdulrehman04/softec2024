@@ -13,6 +13,7 @@ import 'package:softec_app/providers/analytics_provider.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/posts/posts.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
+import 'package:softec_app/screens/search_screen/search_screen.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/services/notifications/base.dart';
 import 'package:softec_app/services/notifications/service.dart';
@@ -48,7 +49,9 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_) => PostState()),
             ChangeNotifierProvider(create: (_) => ProfileState()),
             BlocProvider(create: (_) => ChatCubit()),
-            ChangeNotifierProvider(create: (_) => NotiService())
+            ChangeNotifierProvider(create: (_) => NotiService()),
+            ChangeNotifierProvider(create: (_) => SearchState()),
+            BlocProvider(create: (_) => ChatCubit())
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

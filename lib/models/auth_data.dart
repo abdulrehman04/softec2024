@@ -18,6 +18,7 @@ class AuthData {
   String? deviceToken;
   List<NotificationModel>? notis;
 
+  final List<String> followers;
   AuthData({
     required this.email,
     required this.fullname,
@@ -29,6 +30,7 @@ class AuthData {
     this.ratings,
     this.deviceToken,
     this.notis,
+    required this.followers,
   });
 
   AuthData copyWith({
@@ -42,6 +44,7 @@ class AuthData {
     List<Rating>? ratings,
     String? deviceToken,
     List<NotificationModel>? notis,
+    List<String>? followers,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -54,6 +57,7 @@ class AuthData {
       ratings: ratings ?? this.ratings,
       deviceToken: deviceToken ?? this.deviceToken,
       notis: notis ?? this.notis,
+      followers: followers ?? this.followers,
     );
   }
 
@@ -68,7 +72,8 @@ class AuthData {
       'focus': focus,
       'ratings': (ratings ?? []).map((x) => x.toMap()).toList(),
       'deviceToken': deviceToken ?? '',
-      'notis': (notis ?? []).map((e) => e.toMap()).toList()
+      'notis': (notis ?? []).map((e) => e.toMap()).toList(),
+      'followers': followers,
     };
   }
 
@@ -95,6 +100,9 @@ class AuthData {
                   (e) => NotificationModel.fromMap(e as Map<String, dynamic>),
                 ),
               )
+            : [],
+        followers: map['followers'] != null
+            ? List<String>.from(map['followers'] as List)
             : []);
   }
 

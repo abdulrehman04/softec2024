@@ -5,19 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:softec_app/screens/video_calling/agora_manager.dart';
 import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
-class SDKQuickstartScreen extends StatefulWidget {
+class LiveStreaming extends StatefulWidget {
   final ProductName selectedProduct;
   final bool isBroadcaster;
 
-  const SDKQuickstartScreen(
+  const LiveStreaming(
       {Key? key, required this.selectedProduct, required this.isBroadcaster})
       : super(key: key);
 
   @override
-  SDKQuickstartScreenState createState() => SDKQuickstartScreenState();
+  LiveStreamingState createState() => LiveStreamingState();
 }
 
-class SDKQuickstartScreenState extends State<SDKQuickstartScreen> {
+class LiveStreamingState extends State<LiveStreaming> {
   late AgoraManager agoraManager;
   bool isAgoraManagerInitialized = false;
 

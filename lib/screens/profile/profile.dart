@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileState controller = Provider.of<ProfileState>(context);
-    controller.init(context);
+    controller.init(context, Provider.of<AuthService>(context).authData!);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),

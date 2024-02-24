@@ -1,40 +1,33 @@
 part of 'search_screen.dart';
 
-class _ScreenState extends ChangeNotifier {
-  static _ScreenState s(BuildContext context, [listen = false]) =>
-      Provider.of<_ScreenState>(context, listen: listen);
+class SearchState extends ChangeNotifier {
+  static SearchState s(BuildContext context, [listen = false]) =>
+      Provider.of<SearchState>(context, listen: listen);
 
   final formKey = GlobalKey<FormBuilderState>();
 
   bool hasSearched = false;
-  List<ChatMeta> filtered = [];
+  List<AuthData> allUsers = [];
+  List<AuthData> filteredUsers = [];
 
-  void search(String value, List<ChatMeta> data) {
-    /// Reset the filters, if the user is searching just to avoid the crash because of
-    /// searching across the filtered applied.
-    reset();
-
+  void search(String value) {
     if (value.isEmpty) {
       hasSearched = false;
-      filtered = [];
+      filteredUsers = allUsers;
 
       notifyListeners();
     }
     if (value.isNotEmpty) {
-      hasSearched = true;
       var lowerCaseQuery = value.toLowerCase();
 
-      filtered = data.where((meta) {
+      filteredUsers = allUsers.where((user) {
         final hasUserNameFound =
-            meta.receiver.fullname.toLowerCase().contains(lowerCaseQuery);
+            user.fullname.toLowerCase().contains(lowerCaseQuery);
         return hasUserNameFound;
       }).toList(growable: false)
         ..sort(
-          (a, b) => a.receiver.fullname
-              .toLowerCase()
-              .indexOf(lowerCaseQuery)
-              .compareTo(
-                b.receiver.fullname.toLowerCase().indexOf(lowerCaseQuery),
+          (a, b) => a.fullname.toLowerCase().indexOf(lowerCaseQuery).compareTo(
+                b.fullname.toLowerCase().indexOf(lowerCaseQuery),
               ),
         );
 
@@ -42,10 +35,9 @@ class _ScreenState extends ChangeNotifier {
     }
   }
 
-  void reset() {
-    hasSearched = false;
-    filtered = [];
-
-    notifyListeners();
+  void init(BuildContext context) {
+    AuthService authService = Provider.of<AuthService>(context, listen: false);
+    allUsers = authService.allUsers;
+    filteredUsers = authService.allUsers;
   }
 }

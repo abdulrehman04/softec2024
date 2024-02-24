@@ -34,6 +34,7 @@ class AuthService extends ChangeNotifier {
       await AuthRepo.setToken(authData!.uid, deviceToken ?? '');
       authData!.deviceToken = deviceToken;
 
+      fetchAllUsers();
       isLoginLoading = false;
       notifyListeners();
     } catch (e) {
@@ -44,7 +45,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  List<AuthData>? allUsers;
+  List<AuthData> allUsers = [];
   bool isFetchingUsers = false;
 
   Future<void> fetchAllUsers() async {

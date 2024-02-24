@@ -31,16 +31,59 @@ class _BodyState extends State<_Body> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AppRouter.push(context, CreatePost());
-        },
-        child: Icon(
-          Icons.chat,
-          size: 30,
-          color: AppTheme.c.primary,
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: ExpandableFab(
+        // key: _key,
+        overlayStyle: ExpandableFabOverlayStyle(
+          blur: 5,
         ),
+        children: [
+          FloatingActionButton.small(
+            heroTag: null,
+            tooltip: 'Create post',
+            child: const Icon(Icons.edit_document),
+            onPressed: () {
+              AppRouter.push(context, CreatePost());
+            },
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            tooltip: 'Pose analysis',
+            child: const Icon(Icons.medical_services),
+            onPressed: () {
+              AppRouter.push(context, const PoseAnalysisScreen());
+            },
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            tooltip: 'Live streaming',
+            child: const Icon(Icons.video_call),
+            onPressed: () {
+              AppRouter.push(
+                context,
+                LiveStreaming(
+                  selectedProduct: ProductName.broadcastStreaming,
+                  isBroadcaster:
+                      Provider.of<AuthService>(context, listen: false)
+                              .authData
+                              ?.isProfessional ??
+                          false,
+                ),
+              );
+            },
+          ),
+        ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     AppRouter.push(context, CreatePost());
+      //   },
+      //   child: Icon(
+      //     Icons.chat,
+      //     size: 30,
+      //     color: AppTheme.c.primary,
+      //   ),
+      // ),
       bottomNavigationBar: const BottomBar(),
       body: controller.posts.isEmpty
           ? const Center(
