@@ -58,7 +58,7 @@ class EventScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => Space.y2!,
+                  separatorBuilder: (context, index) => Space.yf(1),
                 ),
     );
   }
