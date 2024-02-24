@@ -13,6 +13,7 @@ class EventService extends ChangeNotifier {
     notifyListeners();
     await repo.saveEvent(
       event.name,
+      event.url,
       event.location,
       event.startDate,
       event.endDate,

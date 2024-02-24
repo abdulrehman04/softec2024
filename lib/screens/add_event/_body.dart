@@ -39,6 +39,12 @@ class _BodyState extends State<_Body> {
                 validator: FormBuilderValidators.required(),
               ),
               Space.y2!,
+              AppTextField(
+                name: 'url',
+                hint: 'Enter Registartion URL',
+                validator: FormBuilderValidators.required(),
+              ),
+              Space.y2!,
               FormBuilderDateRangePicker(
                 firstDate: DateTime.now(),
                 name: 'date',
@@ -101,32 +107,28 @@ class _BodyState extends State<_Body> {
                   : AppButton(
                       label: 'Add Event',
                       onPressed: () {
-                        print('h1');
                         if (startDate == null || endDate == null) {
                           SnackBars.failure(
                               context, 'Please select a date range');
                           return;
                         }
-                        print('h2');
 
                         final form = screenState.formKey.currentState!;
                         final isValid = form.saveAndValidate();
                         if (!isValid) return;
-                        print('h3');
 
                         final data = form.value;
                         final event = Event(
                           name: data['name'] as String,
+                          url: data['url'] as String,
                           location: data['location'] as String,
                           startDate: startDate!,
                           endDate: endDate!,
                           id: DateTime.now().toIso8601String(),
                           participants: [],
                         );
-                        print('h4');
 
                         eventP.createEvent(event);
-                        print('h5');
 
                       },
                       buttonType: ButtonType.borderedSecondary,

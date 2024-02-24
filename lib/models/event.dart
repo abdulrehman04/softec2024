@@ -9,6 +9,7 @@ class Event {
   final DateTime endDate;
   final String id;
   final List<String> participants;
+  final String url;
 
   Event({
     required this.name,
@@ -17,6 +18,7 @@ class Event {
     required this.endDate,
     required this.id,
     required this.participants,
+    required this.url,
   });
 
   Event copyWith({
@@ -26,6 +28,7 @@ class Event {
     DateTime? endDate,
     String? id,
     List<String>? participants,
+    String? url,
   }) {
     return Event(
       name: name ?? this.name,
@@ -34,6 +37,7 @@ class Event {
       endDate: endDate ?? this.endDate,
       id: id ?? this.id,
       participants: participants ?? this.participants,
+      url: url ?? this.url,
     );
   }
 
@@ -45,6 +49,7 @@ class Event {
       'endDate': endDate.millisecondsSinceEpoch,
       'id': id,
       'participants': participants,
+      'url': url,
     };
   }
 
@@ -55,7 +60,8 @@ class Event {
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate'] as int),
       endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate'] as int),
       id: map['id'] as String,
-      participants: List<String>.from((map['participants'] as List<String>)),
+      participants: List<String>.from((map['participants'] as List)),
+      url: map['url'] as String,
     );
   }
 
@@ -65,7 +71,7 @@ class Event {
 
   @override
   String toString() {
-    return 'Event(name: $name, location: $location, startDate: $startDate, endDate: $endDate, id: $id, participants: $participants)';
+    return 'Event(name: $name, location: $location, startDate: $startDate, endDate: $endDate, id: $id, participants: $participants, url: $url)';
   }
 
   @override
@@ -78,7 +84,8 @@ class Event {
       other.startDate == startDate &&
       other.endDate == endDate &&
       other.id == id &&
-      listEquals(other.participants, participants);
+      listEquals(other.participants, participants) &&
+      other.url == url;
   }
 
   @override
@@ -88,6 +95,7 @@ class Event {
       startDate.hashCode ^
       endDate.hashCode ^
       id.hashCode ^
-      participants.hashCode;
+      participants.hashCode ^
+      url.hashCode;
   }
 }

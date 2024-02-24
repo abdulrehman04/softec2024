@@ -8,6 +8,7 @@ class EventRepo {
 
   Future<void> saveEvent(
     String name,
+    String url,
     String location,
     DateTime startDate,
     DateTime endDate,
@@ -17,6 +18,7 @@ class EventRepo {
     try {
       final event = Event(
         name: name,
+        url: url,
         location: location,
         startDate: startDate,
         endDate: endDate,
