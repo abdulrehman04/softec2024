@@ -38,10 +38,6 @@ class _BodyState extends State<_Body> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                widget.receiver.fullname,
-                style: AppText.b2b,
-              ),
               Space.y2!,
               BlocBuilder<ChatCubit, ChatState>(
                 builder: (context, state) {
@@ -97,24 +93,26 @@ class _BodyState extends State<_Body> {
                     ),
                   ),
                   Space.x2!,
-                  IconButton(onPressed: () {
-                     final form = screenState.formKey.currentState!;
-                      form.save();
-                      final value = form.value;
-                      final msg = value[_FormKeys.message] as String?;
+                  IconButton(
+                      onPressed: () {
+                        final form = screenState.formKey.currentState!;
+                        form.save();
+                        final value = form.value;
+                        final msg = value[_FormKeys.message] as String?;
 
-                      if (msg == null || msg.isEmpty) return;
-                      final message = Message(
-                        to: widget.receiver.uid,
-                        from: sender.uid,
-                        content: msg,
-                        createdAt: DateTime.now(),
-                      );
+                        if (msg == null || msg.isEmpty) return;
+                        final message = Message(
+                          to: widget.receiver.uid,
+                          from: sender.uid,
+                          content: msg,
+                          createdAt: DateTime.now(),
+                        );
 
-                      chatCubit.sendMessage(message);
+                        chatCubit.sendMessage(message);
 
-                      screenState.resetForm();
-                  }, icon: const Icon(Icons.telegram))
+                        screenState.resetForm();
+                      },
+                      icon: const Icon(Icons.telegram))
                 ],
               ),
             ],

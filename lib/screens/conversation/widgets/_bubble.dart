@@ -17,11 +17,8 @@ class _Bubble extends StatelessWidget {
           isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-          constraints: BoxConstraints(
-            maxWidth: 120.w,
-          ),
           margin: Space.all(),
-          padding: Space.all(),
+          padding: Space.all(10),
           decoration: BoxDecoration(
             color: isUser ? AppTheme.c.primary : Colors.grey[400],
             borderRadius: isUser
@@ -42,13 +39,14 @@ class _Bubble extends StatelessWidget {
             children: [
               Text(
                 message.content,
-                style: AppText.b2!.cl(isUser ? Colors.white : Colors.black),
+                style: AppText.b1bm!.cl(isUser ? Colors.white : Colors.black),
               ),
               Space.y2!,
               Text(
                 DateFormat('hh:mm:aa').format(message.createdAt),
-                style: AppText.l1!
-                    .cl(isUser ? Colors.white.withAlpha(150) : Colors.grey),
+                style: AppText.l1!.cl(isUser
+                    ? Colors.white.withAlpha(150)
+                    : Colors.black.withOpacity(0.7)),
               )
             ],
           ),
