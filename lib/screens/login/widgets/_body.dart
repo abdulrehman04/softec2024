@@ -64,11 +64,6 @@ class _Body extends StatelessWidget {
                       if (!context.mounted) return;
                       'home'.push(context);
                     }
-
-                    // 'home'.push(context);
-                    // final form = screenState.formKey.currentState;
-                    // final isValid = form!.saveAndValidate();
-                    // if (!isValid) return;
                   },
                   buttonType: ButtonType.borderedSecondary,
                 ),
