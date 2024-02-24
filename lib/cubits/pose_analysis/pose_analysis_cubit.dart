@@ -7,7 +7,7 @@ import 'package:softec_app/cubits/pose_analysis/analysis_layer.dart';
 part 'pose_analysis_state.dart';
 
 class PoseAnalysisCubit extends Cubit<PoseAnalysisState> {
-  PoseAnalysisCubit() : super(PoseAnalysisInitial());
+  PoseAnalysisCubit() : super(const PoseAnalysisInitial());
 
   Future<void> analysePose(InputImage image) async {
     emit(const PoseAnalysisLoading());
@@ -22,4 +22,8 @@ class PoseAnalysisCubit extends Cubit<PoseAnalysisState> {
       emit(PoseAnalysisFailure(message: e.toString()));
     }
   }  
+
+  void clearState() {
+    emit(const PoseAnalysisInitial());
+  }
 }
