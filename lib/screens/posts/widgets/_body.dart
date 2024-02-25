@@ -29,7 +29,14 @@ class _BodyState extends State<_Body> {
           actions: [
             IconButton(
               onPressed: () {
-                AppRouter.push(context, const ChatScreen());
+                AppRouter.push(
+                  context,
+                  MealPlanView(
+                    plan: obese,
+                    bmi: 45.2,
+                  ),
+                );
+                // AppRouter.push(context, const ChatScreen());
               },
               icon: const Icon(Icons.telegram),
             )
@@ -128,3 +135,79 @@ class _BodyState extends State<_Body> {
     );
   }
 }
+
+MealPlan underweight = MealPlan(
+  breakfast: [
+    'Whole grain toast with avocado slices and a poached egg',
+    'Greek yogurt with mixed berries and a drizzle of honey',
+  ],
+  lunch: [
+    'Quinoa salad with mixed vegetables (such as bell peppers, cucumbers, and cherry tomatoes) and grilled chicken or tofu',
+    'A piece of fruit (apple, pear, or banana)',
+  ],
+  dinner: [
+    'Grilled salmon with roasted sweet potatoes and steamed broccoli',
+    'Mixed green salad with olive oil and vinegar dressing',
+  ],
+  snacks: [
+    'Almonds or mixed nuts',
+    'Carrot sticks with hummus',
+  ],
+);
+
+MealPlan normal = MealPlan(
+  breakfast: [
+    'Oatmeal topped with sliced banana, almonds, and a drizzle of maple syrup',
+    'Scrambled eggs with spinach and whole grain toast',
+  ],
+  lunch: [
+    'Whole wheat wrap with grilled chicken or turkey, lettuce, tomato, and avocado',
+    'Greek salad with feta cheese, olives, and a vinaigrette dressing',
+  ],
+  dinner: [
+    'Stir-fried tofu or lean beef with mixed vegetables (broccoli, bell peppers, snap peas) served over brown rice',
+    'Steamed green beans with garlic and lemon zest',
+  ],
+  snacks: [
+    'Greek yogurt with granola',
+    'Apple slices with almond butter',
+  ],
+);
+
+MealPlan overweight = MealPlan(
+  breakfast: [
+    'Smoothie made with spinach, banana, frozen berries, Greek yogurt, and almond milk',
+    'Whole grain toast with peanut butter and sliced strawberries',
+  ],
+  lunch: [
+    'Grilled vegetable and chickpea salad with quinoa',
+    'Whole grain pita with hummus and sliced cucumbers',
+  ],
+  dinner: [
+    'Baked chicken breast with roasted potatoes and asparagus',
+    'Mixed green salad with balsamic vinaigrette',
+  ],
+  snacks: [
+    'Air-popped popcorn',
+    'Cottage cheese with pineapple chunks',
+  ],
+);
+
+MealPlan obese = MealPlan(
+  breakfast: [
+    'Veggie omelet with mushrooms, onions, bell peppers, and a sprinkle of cheese',
+    'Whole grain English muffin with avocado spread',
+  ],
+  lunch: [
+    'Turkey and avocado wrap with whole wheat tortilla',
+    'Mixed bean salad with bell peppers, corn, and a lime vinaigrette',
+  ],
+  dinner: [
+    'Grilled fish with quinoa pilaf and steamed broccoli',
+    'Spinach salad with walnuts, cranberries, and a light vinaigrette dressing',
+  ],
+  snacks: [
+    'Celery sticks with peanut butter',
+    'Low-fat Greek yogurt with sliced peaches',
+  ],
+);
