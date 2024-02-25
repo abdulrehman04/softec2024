@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:softec_app/models/auth_data.dart';
 
 class AuthRepo {
@@ -69,12 +70,14 @@ class AuthRepo {
     }
   }
 
-  static Future<void> setToken(String uid, String token) async {
+  static Future<void> setTokenAndLocation(
+      String uid, String token, Position location) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(uid)
-          .set({'deviceToken': token}, SetOptions(merge: true));
+      await _firestore.collection('users').doc(uid).set({
+        'deviceToken': token,
+        'lat': location.latitude,
+        'long': location.longitude,
+      }, SetOptions(merge: true));
     } catch (e) {
       debugPrint(e.toString());
       throw Exception('Internal server error');

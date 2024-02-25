@@ -17,6 +17,8 @@ class AuthData {
   final List<Rating>? ratings;
   String? deviceToken;
   List<NotificationModel>? notis;
+  final double lat;
+  final double long;
 
   final List<String> followers;
   int postCount;
@@ -33,6 +35,8 @@ class AuthData {
     this.notis,
     required this.followers,
     required this.postCount,
+    required this.lat,
+    required this.long,
   });
 
   AuthData copyWith({
@@ -48,6 +52,8 @@ class AuthData {
     List<NotificationModel>? notis,
     List<String>? followers,
     int? postCount,
+    double? lat,
+    double? long,
   }) {
     return AuthData(
       email: email ?? this.email,
@@ -62,6 +68,8 @@ class AuthData {
       notis: notis ?? this.notis,
       followers: followers ?? this.followers,
       postCount: postCount ?? this.postCount,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
     );
   }
 
@@ -83,9 +91,10 @@ class AuthData {
   }
 
   factory AuthData.fromMap(Map<String, dynamic> map) {
-    print(map['ratings']);
     return AuthData(
         email: map['email'] as String,
+        lat: map['lat'] ?? 0.0,
+        long: map['long'] ?? 0.0,
         fullname: map['fullname'] as String,
         profilePicture: (map['profilePicture'] ?? '') as String,
         uid: map['uid'] as String,
