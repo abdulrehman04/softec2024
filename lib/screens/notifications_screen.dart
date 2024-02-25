@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/services/notifications/service.dart';
 import 'package:softec_app/widgets/core/bottom_bar/bottom_bar.dart';
 
@@ -33,8 +34,8 @@ class NotificationsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListTile(
-                      title: Text(noti.title),
-                      subtitle: Text(noti.body),
+                      title: Text(noti.title, style: AppText.h2b),
+                      subtitle: Text(noti.body, style: AppText.b2),
                     ),
                   );
                 },

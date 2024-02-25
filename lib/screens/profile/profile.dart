@@ -110,8 +110,9 @@ class ProfileScreen extends StatelessWidget {
                                               : 3000;
 
                                       return AlertDialog(
-                                        title: Text('Badge details'),
-                                        content: Container(
+                                        title: Text('Badge details',
+                                            style: AppText.h1bm),
+                                        content: SizedBox(
                                           height: 200,
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -194,7 +195,7 @@ class ProfileScreen extends StatelessWidget {
                 AppButton(
                   label: 'View all Reviews',
                   onPressed: () {
-                    AppRouter.push(context, ProfileReviews());
+                    AppRouter.push(context, const ProfileReviews());
                   },
                   buttonType: ButtonType.borderedSecondary,
                 )
