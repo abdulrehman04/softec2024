@@ -15,6 +15,7 @@ class _BodyState extends State<_Body> {
   Widget build(BuildContext context) {
     final screenState = _ScreenState.s(context);
     final eventP = Provider.of<EventService>(context);
+    final authP = Provider.of<AuthService>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -133,6 +134,18 @@ class _BodyState extends State<_Body> {
                           if (!mounted) return;
                           SnackBars.success(
                               context, 'Your event has been added');
+
+                          final allUsers = authP.allUsers;
+                          for (final user in allUsers) {
+                            if (authP.authData!.followers.contains(user.uid)) {
+                              NotificationBase().sendPushMessage(
+                                user.uid,
+                                user.deviceToken ?? '',
+                                '${authP.authData!.fullname} is hosting an event!',
+                                "Don't miss!",
+                              );
+                            }
+                          }
                         } else {
                           if (!mounted) return;
                           SnackBars.failure(
