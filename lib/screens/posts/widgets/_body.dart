@@ -20,6 +20,8 @@ class _BodyState extends State<_Body> {
   @override
   Widget build(BuildContext context) {
     PostState controller = Provider.of<PostState>(context, listen: true);
+    final authP = Provider.of<AuthService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Feed'),
@@ -68,6 +70,17 @@ class _BodyState extends State<_Body> {
             tooltip: 'Live streaming',
             child: const Icon(Icons.video_call),
             onPressed: () {
+              final allUsers = authP.allUsers;
+              for (final user in allUsers) {
+                if (authP.authData!.followers.contains(user.uid)) {
+                  NotificationBase().sendPushMessage(
+                    user.uid,
+                    user.deviceToken ?? '',
+                    '${authP.authData!.fullname} is going live!',
+                    "Guess who?",
+                  );
+                }
+              }
               AppRouter.push(
                 context,
                 LiveStreaming(
