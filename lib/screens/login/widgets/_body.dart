@@ -6,7 +6,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenState = _ScreenState.s(context, true);
-    final authService = Provider.of<AuthService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: true);
 
     return SafeArea(
       child: Scaffold(
@@ -66,7 +66,7 @@ class _Body extends StatelessWidget {
 
                           if (authService.authData != null) {
                             if (!context.mounted) return;
-                            'home'.push(context);
+                            'home'.pushReplace(context);
                           }
                         },
                         buttonType: ButtonType.borderedSecondary,

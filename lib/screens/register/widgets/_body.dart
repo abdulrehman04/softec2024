@@ -246,7 +246,7 @@ class _Body extends StatelessWidget {
                             await authService.register(payload);
                             if (authService.authData != null) {
                               if (!context.mounted) return;
-                              AppRouter.push(context, const Posts());
+                              'home'.pushReplace(context);
                             }
                           },
                           buttonType: ButtonType.borderedSecondary,
