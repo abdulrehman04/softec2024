@@ -49,24 +49,28 @@ class _Body extends StatelessWidget {
                   validator: FormBuilderValidators.required(),
                 ),
                 const Spacer(),
-                AppButton(
-                  label: 'Login',
-                  onPressed: () async {
-                    final form = screenState.formKey.currentState!;
-                    final isValid = form.saveAndValidate();
-                    if (!isValid) return;
-                    Map<String, dynamic> payload = form.value;
-                    await authService.login(
-                      payload,
-                    );
+                authService.isLoginLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : AppButton(
+                        label: 'Login',
+                        onPressed: () async {
+                          final form = screenState.formKey.currentState!;
+                          final isValid = form.saveAndValidate();
+                          if (!isValid) return;
+                          Map<String, dynamic> payload = form.value;
+                          await authService.login(
+                            payload,
+                          );
 
-                    if (authService.authData != null) {
-                      if (!context.mounted) return;
-                      'home'.push(context);
-                    }
-                  },
-                  buttonType: ButtonType.borderedSecondary,
-                ),
+                          if (authService.authData != null) {
+                            if (!context.mounted) return;
+                            'home'.push(context);
+                          }
+                        },
+                        buttonType: ButtonType.borderedSecondary,
+                      ),
                 const AppDivider(
                   text: 'OR',
                 ),
