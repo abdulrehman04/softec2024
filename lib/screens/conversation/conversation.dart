@@ -9,6 +9,7 @@ import 'package:softec_app/cubits/chat/cubit.dart';
 import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/models/chat/message.dart';
 import 'package:softec_app/services/auth.dart';
+import 'package:softec_app/services/notifications/base.dart';
 import 'package:softec_app/widgets/design/input/app_text_field.dart';
 
 part '_state.dart';
