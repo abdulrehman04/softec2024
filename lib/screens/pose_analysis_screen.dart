@@ -87,6 +87,7 @@ class PoseAnalysisScreen extends StatelessWidget {
                         child: const Center(
                           child: Text(
                             'Please select an image using the floating action button',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       )
@@ -134,11 +135,11 @@ class PoseAnalysisScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'Steps Taken',
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30, color: Colors.white),
                       ),
                       Text(
                         analyticsProvider.steps,
-                        style: TextStyle(fontSize: 60),
+                        style: TextStyle(fontSize: 60, color: Colors.white),
                       ),
                       Divider(
                         height: 100,
@@ -147,7 +148,7 @@ class PoseAnalysisScreen extends StatelessWidget {
                       ),
                       Text(
                         'Pedestrian Status',
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 30, color: Colors.white),
                       ),
                       Icon(
                         analyticsProvider.status == 'walking'
