@@ -33,129 +33,177 @@ class ProfileScreen extends StatelessWidget {
             child: FormBuilder(
               child: Column(
                 children: [
-                  SizedBox(
-                    width: 170.w,
-                    height: 170.h,
-                    child: Stack(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            controller.updateProfilePicture(context);
-                          },
-                          child: controller.userData.profilePicture == ''
-                              ? Container(
-                                  height: 150.h,
-                                  width: 150.w,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey[900],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 100.w,
+                              height: 100.h,
+                              child: Stack(
+                                children: [
+                                  controller.userData.profilePicture == ''
+                                      ? Container(
+                                          height: 80.h,
+                                          width: 80.w,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey[900],
+                                          ),
+                                          child: const Icon(
+                                            Icons.person,
+                                            size: 50,
+                                          ),
+                                        )
+                                      : CircleAvatar(
+                                          radius: 70,
+                                          backgroundImage: NetworkImage(
+                                            controller.userData.profilePicture,
+                                          ),
+                                        ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: controller.isLoading
+                                        ? const CircularProgressIndicator()
+                                        : Container(),
                                   ),
-                                  child: const Icon(
-                                    Icons.person,
-                                    size: 80,
-                                  ),
-                                )
-                              : CircleAvatar(
-                                  radius: 70,
-                                  backgroundImage: NetworkImage(
-                                    controller.userData.profilePicture,
-                                  ),
-                                ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: controller.isLoading
-                              ? const CircularProgressIndicator()
-                              : Container(),
-                        ),
-                        controller.userData.postCount > 10
-                            ? Positioned(
-                                bottom: 15,
-                                right: 15,
-                                child: InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        String badge = controller
-                                                        .userData.postCount >
-                                                    10 &&
-                                                controller.userData.postCount <
-                                                    150
-                                            ? 'Bronze'
-                                            : controller.userData.postCount >
-                                                        150 &&
-                                                    controller.userData
-                                                            .postCount <
-                                                        500
-                                                ? 'Silver'
-                                                : 'Gold';
+                                  controller.userData.postCount > 10
+                                      ? Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: InkWell(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  String badge = controller
+                                                                  .userData
+                                                                  .postCount >
+                                                              10 &&
+                                                          controller.userData
+                                                                  .postCount <
+                                                              150
+                                                      ? 'Bronze'
+                                                      : controller.userData
+                                                                      .postCount >
+                                                                  150 &&
+                                                              controller
+                                                                      .userData
+                                                                      .postCount <
+                                                                  500
+                                                          ? 'Silver'
+                                                          : 'Gold';
 
-                                        Color color = controller
-                                                        .userData.postCount >
-                                                    10 &&
-                                                controller.userData.postCount <
-                                                    150
-                                            ? Colors.brown
-                                            : controller.userData.postCount >
-                                                        150 &&
-                                                    controller.userData
-                                                            .postCount <
-                                                        500
-                                                ? Colors.grey
-                                                : Colors.yellow[700]!;
+                                                  Color color = controller
+                                                                  .userData
+                                                                  .postCount >
+                                                              10 &&
+                                                          controller.userData
+                                                                  .postCount <
+                                                              150
+                                                      ? Colors.brown
+                                                      : controller.userData
+                                                                      .postCount >
+                                                                  150 &&
+                                                              controller
+                                                                      .userData
+                                                                      .postCount <
+                                                                  500
+                                                          ? Colors.grey
+                                                          : Colors.yellow[700]!;
 
-                                        int nextLevel = (badge == 'Bronze')
-                                            ? 150
-                                            : (badge == 'Silver')
-                                                ? 500
-                                                : 3000;
+                                                  int nextLevel =
+                                                      (badge == 'Bronze')
+                                                          ? 150
+                                                          : (badge == 'Silver')
+                                                              ? 500
+                                                              : 3000;
 
-                                        return AlertDialog(
-                                          title: Text('Badge details'),
-                                          content: Container(
-                                            height: 200,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.shield,
-                                                  size: 80,
-                                                  color: color,
-                                                ),
-                                                25.verticalSpace,
-                                                Text(
-                                                  'You currently have $badge badge. ${badge == 'Gold' ? '' : 'Make $nextLevel posts to achieve the next badge'}',
-                                                  maxLines: 3,
-                                                  softWrap: true,
-                                                  style: AppText.h2,
-                                                )
-                                              ],
+                                                  return AlertDialog(
+                                                    title:
+                                                        Text('Badge details'),
+                                                    content: Container(
+                                                      height: 200,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Column(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.shield,
+                                                            size: 80,
+                                                            color: color,
+                                                          ),
+                                                          25.verticalSpace,
+                                                          Text(
+                                                            'You currently have $badge badge. ${badge == 'Gold' ? '' : 'Make $nextLevel posts to achieve the next badge'}',
+                                                            maxLines: 3,
+                                                            softWrap: true,
+                                                            style: AppText.h2,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Icon(
+                                              Icons.shield,
+                                              color: controller.userData
+                                                              .postCount >
+                                                          10 &&
+                                                      controller.userData
+                                                              .postCount <
+                                                          150
+                                                  ? Colors.brown
+                                                  : controller.userData
+                                                                  .postCount >
+                                                              150 &&
+                                                          controller.userData
+                                                                  .postCount <
+                                                              500
+                                                      ? Colors.grey
+                                                      : Colors.yellow[700],
+                                              size: 35,
                                             ),
                                           ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.shield,
-                                    color: controller.userData.postCount > 10 &&
-                                            controller.userData.postCount < 150
-                                        ? Colors.brown
-                                        : controller.userData.postCount > 150 &&
-                                                controller.userData.postCount <
-                                                    500
-                                            ? Colors.grey
-                                            : Colors.yellow[700],
-                                    size: 35,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                      ],
-                    ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            ),
+                            5.verticalSpace,
+                            Text(
+                              controller.userData.fullname,
+                              style: AppText.h2!.copyWith(color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                      25.horizontalSpace,
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          children: [
+                            Text(
+                              '${controller.userData.followers.length} Follower   |   ${controller.userData.ratings!.length} Ratings',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // 5.verticalSpace,
+                            Divider(
+                              color: AppTheme.c.primary,
+                            ),
+                            5.verticalSpace,
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                   45.verticalSpace,
                   UserTypeRow(
