@@ -235,6 +235,22 @@ class OtherUserProfile extends StatelessWidget {
                     )
                   ],
                 ),
+                25.verticalSpace,
+                user.isBroadcasting
+                    ? AppButton(
+                        label: 'Join broadcast',
+                        onPressed: () {
+                          // if (controller.userData.followers
+                          //     .contains(userData.uid)) {
+                          //   controller.removeFollower(context);
+                          // } else {
+                          //   controller.addFollower(context);
+                          // }
+                        },
+                        buttonType: ButtonType.borderedSecondary,
+                        height: 35,
+                      )
+                    : const SizedBox(),
                 45.verticalSpace,
                 UserTypeRow(
                   isProfessional: controller.userData.isProfessional,

@@ -7,8 +7,8 @@ class _FormData {
     }
 
     return {
-      'email': 'test1@test.com',
-      'password': 'test123',
+      'email': 'abdulrehman71255@gmail.com',
+      'password': '12345678',
     };
   }
 }

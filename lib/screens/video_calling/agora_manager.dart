@@ -28,6 +28,7 @@ class AgoraManager {
   });
 
   static Future<AgoraManager> create({
+    required String channelId,
     required ProductName currentProduct,
     required Function(String message) messageCallback,
     required Function(String eventName, Map<String, dynamic> eventArgs)
@@ -39,14 +40,14 @@ class AgoraManager {
       eventCallback: eventCallback,
     );
 
-    await manager.initialize();
+    await manager.initialize(channelId);
     return manager;
   }
 
-  Future<void> initialize() async {
+  Future<void> initialize(String channel) async {
     try {
       appId = '8da25adad1cc4dadb6718a5c65aad093';
-      channelName = 'demo';
+      channelName = channel;
       localUid = 0;
     } catch (e) {
       messageCallback(e.toString());

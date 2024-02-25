@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/screens/video_calling/agora_manager.dart';
+import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class LiveStreaming extends StatefulWidget {
@@ -43,7 +47,15 @@ class LiveStreamingState extends State<LiveStreaming> {
               alignment: Alignment.bottomCenter,
               child: InkWell(
                 onTap: () async {
+                  AuthData user = Provider.of<AuthService>(context).authData!;
                   await leave();
+
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user.uid)
+                      .update({
+                    'isBroadcasting': false,
+                  });
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
@@ -80,8 +92,10 @@ class LiveStreamingState extends State<LiveStreaming> {
   }
 
   Future<void> initialize() async {
+    AuthData user = Provider.of<AuthService>(context).authData!;
     // Set up an instance of AgoraManager
     agoraManager = await AgoraManager.create(
+      channelId: user.uid,
       currentProduct: widget.selectedProduct,
       messageCallback: showMessage,
       eventCallback: eventCallback,
@@ -90,6 +104,10 @@ class LiveStreamingState extends State<LiveStreaming> {
     setState(() {
       initializeUiHelper(agoraManager, setStateCallback);
       isAgoraManagerInitialized = true;
+    });
+
+    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+      'isBroadcasting': true,
     });
 
     _handleRadioValueChange(widget.isBroadcaster);

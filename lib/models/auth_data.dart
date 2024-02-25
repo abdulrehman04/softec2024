@@ -19,7 +19,7 @@ class AuthData {
   List<NotificationModel>? notis;
   final double lat;
   final double long;
-
+  final bool isBroadcasting;
   final List<String> followers;
   int postCount;
   AuthData({
@@ -37,6 +37,7 @@ class AuthData {
     required this.postCount,
     required this.lat,
     required this.long,
+    required this.isBroadcasting,
   });
 
   AuthData copyWith({
@@ -70,6 +71,7 @@ class AuthData {
       postCount: postCount ?? this.postCount,
       lat: lat ?? this.lat,
       long: long ?? this.long,
+      isBroadcasting: this.isBroadcasting,
     );
   }
 
@@ -87,6 +89,7 @@ class AuthData {
       'notis': (notis ?? []).map((e) => e.toMap()).toList(),
       'followers': followers,
       'postCount': postCount,
+      'isBroadcasting': isBroadcasting,
     };
   }
 
@@ -102,6 +105,7 @@ class AuthData {
         domain: map['domain'] as String,
         focus: map['focus'] as String,
         postCount: map['postCount'] ?? 0,
+        isBroadcasting: map['isBroadcasting'] ?? false,
         ratings: map['ratings'] != null
             ? List<Rating>.from(
                 (map['ratings'] as List).map<Rating?>(
