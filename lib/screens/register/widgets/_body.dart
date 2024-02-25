@@ -216,40 +216,41 @@ class _Body extends StatelessWidget {
                   Space.y2!,
                   Space.y2!,
                   Space.y2!,
-                  authService.isRegisterLoading ? const Center(
-                    child: CircularProgressIndicator(),
-                  ) :
-                  AppButton(
-                    label: 'Register',
-                    onPressed: () async {
-                      final isValid =
-                          screenState.formKey.currentState!.validate();
-                      screenState.formKey.currentState!.save();
-                      if (!isValid) return;
+                  authService.isRegisterLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : AppButton(
+                          label: 'Register',
+                          onPressed: () async {
+                            final isValid =
+                                screenState.formKey.currentState!.validate();
+                            screenState.formKey.currentState!.save();
+                            if (!isValid) return;
 
-                      Map<String, dynamic> formData =
-                          screenState.formKey.currentState!.value;
+                            Map<String, dynamic> formData =
+                                screenState.formKey.currentState!.value;
 
-                      Map<String, dynamic> payload = {
-                        'fullname': formData['name'],
-                        'domain': formData['domain'],
-                        'email': formData['email'],
-                        'password': formData['password'],
-                        'focus': formData['focus'],
-                        'isProfessional': formData['isProfessional'],
-                      };
-                      if (payload['isProfessional'] == null) {
-                        payload['isProfessional'] = false;
-                      }
+                            Map<String, dynamic> payload = {
+                              'fullname': formData['name'],
+                              'domain': formData['domain'],
+                              'email': formData['email'],
+                              'password': formData['password'],
+                              'focus': formData['focus'],
+                              'isProfessional': formData['isProfessional'],
+                            };
+                            if (payload['isProfessional'] == null) {
+                              payload['isProfessional'] = false;
+                            }
 
-                      await authService.register(payload);
-                      if (authService.authData != null) {
-                        if (!context.mounted) return;
-                        AppRouter.push(context, const Posts());
-                      }
-                    },
-                    buttonType: ButtonType.borderedSecondary,
-                  ),
+                            await authService.register(payload);
+                            if (authService.authData != null) {
+                              if (!context.mounted) return;
+                              AppRouter.push(context, const Posts());
+                            }
+                          },
+                          buttonType: ButtonType.borderedSecondary,
+                        ),
                   const AppDivider(
                     text: 'OR',
                   ),
