@@ -110,6 +110,13 @@ class _BodyState extends State<_Body> {
 
                         chatCubit.sendMessage(message);
 
+                        NotificationBase().sendPushMessage(
+                          widget.receiver.uid,
+                          widget.receiver.deviceToken ?? '',
+                          '${sender.fullname} sent you a message!',
+                          msg,
+                        );
+
                         screenState.resetForm();
                       },
                       icon: const Icon(Icons.telegram))
