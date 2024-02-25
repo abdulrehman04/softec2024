@@ -216,6 +216,9 @@ class _Body extends StatelessWidget {
                   Space.y2!,
                   Space.y2!,
                   Space.y2!,
+                  authService.isRegisterLoading ? const Center(
+                    child: CircularProgressIndicator(),
+                  ) :
                   AppButton(
                     label: 'Register',
                     onPressed: () async {
