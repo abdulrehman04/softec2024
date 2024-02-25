@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:softec_app/configs/configs.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({
@@ -23,7 +24,10 @@ class PostItem extends StatelessWidget {
               : CircleAvatar(
                   backgroundImage: NetworkImage(image),
                 ),
-          title: Text(name),
+          title: Text(
+            name,
+            style: AppText.h3,
+          ),
         ),
         title != ''
             ? Padding(

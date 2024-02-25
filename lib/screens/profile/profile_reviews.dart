@@ -61,7 +61,10 @@ class ProfileReviews extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Text(e.review),
+                            child: Text(
+                              e.review,
+                              style: AppText.b1,
+                            ),
                           ),
                           10.verticalSpace,
                         ],

@@ -20,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
     ProfileState controller = Provider.of<ProfileState>(context);
     controller.init(context, Provider.of<AuthService>(context).authData!);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Profile'),
       ),
@@ -110,8 +111,9 @@ class ProfileScreen extends StatelessWidget {
                                               : 3000;
 
                                       return AlertDialog(
-                                        title: Text('Badge details'),
-                                        content: Container(
+                                        title: Text('Badge details',
+                                            style: AppText.h1bm),
+                                        content: SizedBox(
                                           height: 200,
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -162,6 +164,7 @@ class ProfileScreen extends StatelessWidget {
                 AppTextField(
                   name: 'name',
                   label: 'Name',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.fullname,
                   ),
@@ -170,6 +173,7 @@ class ProfileScreen extends StatelessWidget {
                 AppTextField(
                   name: 'email',
                   label: 'Email',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.email,
                   ),
@@ -178,6 +182,7 @@ class ProfileScreen extends StatelessWidget {
                 AppTextField(
                   name: 'domain',
                   label: 'Domain',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.domain,
                   ),
@@ -186,6 +191,7 @@ class ProfileScreen extends StatelessWidget {
                 AppTextField(
                   name: 'focus',
                   label: 'Focus',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.focus,
                   ),
@@ -194,7 +200,7 @@ class ProfileScreen extends StatelessWidget {
                 AppButton(
                   label: 'View all Reviews',
                   onPressed: () {
-                    AppRouter.push(context, ProfileReviews());
+                    AppRouter.push(context, const ProfileReviews());
                   },
                   buttonType: ButtonType.borderedSecondary,
                 )
