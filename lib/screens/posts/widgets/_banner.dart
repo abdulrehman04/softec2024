@@ -29,7 +29,9 @@ class _Banner extends StatelessWidget {
                 ],
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  AppRouter.push(context, const MealScreen());
+                },
                 icon: const Icon(
                   Icons.navigate_next,
                   size: 34,

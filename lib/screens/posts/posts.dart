@@ -11,6 +11,7 @@ import 'package:softec_app/repositories/posts_repo.dart';
 import 'package:softec_app/router/router.dart';
 import 'package:softec_app/screens/chat/chat.dart';
 import 'package:softec_app/screens/event_screen.dart';
+import 'package:softec_app/screens/meal/meal_screen.dart';
 import 'package:softec_app/screens/pose_analysis_screen.dart';
 import 'package:softec_app/screens/posts/create_post/create_post.dart';
 import 'package:softec_app/screens/posts/widgets/post_item.dart';
