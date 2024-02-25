@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/repositories/auth_repo.dart';
+import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class AuthService extends ChangeNotifier {
   bool isRegisterLoading = false;
@@ -24,6 +26,16 @@ class AuthService extends ChangeNotifier {
   }
 
   bool isLoginLoading = false;
+  bool isEmailNotVerified = false;
+
+  void reset() {
+    isLoginLoading = false;
+    isEmailNotVerified = false;
+    isRegisterLoading = false;
+    authData = null;
+    notifyListeners();
+  }
+
   Future<void> login(Map<String, dynamic> payload) async {
     try {
       isLoginLoading = true;
@@ -32,6 +44,14 @@ class AuthService extends ChangeNotifier {
       final deviceToken = await FirebaseMessaging.instance.getToken();
 
       authData = await AuthRepo.loginUser(payload);
+      if (authData == null) {
+        isLoginLoading = false;
+        isEmailNotVerified = true;
+        authData = null;
+        isRegisterLoading = false;
+        notifyListeners();
+        return;
+      }
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -66,6 +86,22 @@ class AuthService extends ChangeNotifier {
     } catch (e) {
       isFetchingUsers = false;
       notifyListeners();
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      isFetchingUsers = false;
+      allUsers = [];
+      isLoginLoading = false;
+      isRegisterLoading = false;
+      isEmailNotVerified = false;
+      authData = null;
+      notifyListeners();
+    } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }

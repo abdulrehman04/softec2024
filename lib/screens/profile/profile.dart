@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/login/login.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/screens/profile/profile_reviews.dart';
 import 'package:softec_app/screens/profile/report_a_problem.dart';
@@ -20,10 +21,27 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ProfileState controller = Provider.of<ProfileState>(context);
     controller.init(context, Provider.of<AuthService>(context).authData!);
+    final authP = Provider.of<AuthService>(context, listen: true);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Profile'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+              );
+              authP.logout();
+              authP.reset();
+              controller.reset();
+            },
+            icon: const Icon(Icons.exit_to_app),
+          )
+        ],
       ),
       bottomNavigationBar: const BottomBar(),
       body: SingleChildScrollView(

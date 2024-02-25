@@ -99,7 +99,7 @@ class _BodyState extends State<_Body> {
                                             ),
                                           )
                                         : CircleAvatar(
-                                            radius: 70,
+                                            radius: 20,
                                             backgroundImage: NetworkImage(
                                               e.profilePicture,
                                             ),
@@ -155,7 +155,7 @@ class _BodyState extends State<_Body> {
                                       ),
                                     )
                                   : CircleAvatar(
-                                      radius: 70,
+                                      radius: 20,
                                       backgroundImage: NetworkImage(
                                         chat.profilePicture,
                                       ),

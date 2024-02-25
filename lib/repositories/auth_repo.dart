@@ -15,6 +15,8 @@ class AuthRepo {
         password: payload['password'],
       );
 
+      await userCredential.user!.sendEmailVerification();
+
       final user = userCredential.user;
 
       payload.remove('password');
@@ -30,12 +32,16 @@ class AuthRepo {
     }
   }
 
-  static Future<AuthData> loginUser(Map<String, dynamic> payload) async {
+  static Future<AuthData?> loginUser(Map<String, dynamic> payload) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
         email: payload['email'],
         password: payload['password'],
       );
+
+      if (user.user!.emailVerified == false) {
+        return null;
+      }
 
       final data = await getUser(user.user!.uid);
       return data;

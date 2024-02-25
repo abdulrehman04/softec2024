@@ -124,4 +124,10 @@ class ProfileState extends ChangeNotifier {
     );
     notifyListeners();
   }
+
+  void reset() {
+    pickedImage = null;
+    isLoading = false;
+    notifyListeners();
+  }
 }
