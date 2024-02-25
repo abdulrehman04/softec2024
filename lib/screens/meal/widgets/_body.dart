@@ -127,7 +127,7 @@ class _Body extends StatelessWidget {
               ),
               Space.yf(50),
               AppButton(
-                label: 'Get a plan!',
+                label: 'Calculate BMI!',
                 onPressed: () {
                   final form = screenState.formKey.currentState!;
                   final isValid = form.saveAndValidate();
@@ -151,7 +151,7 @@ class _Body extends StatelessWidget {
                 buttonType: ButtonType.secondary,
               ),
               Space.yf(50),
-              if (screenState.bmi != null && screenState.bodyType != null)
+              if (screenState.bmi != null && screenState.bodyType != null) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -166,11 +166,40 @@ class _Body extends StatelessWidget {
                       color: AppTheme.c.grey,
                     ),
                   ],
-                )
+                ),
+                Space.yf(50),
+                AppButton(
+                  label: 'Get a plan!',
+                  onPressed: () {
+                    final bmi = screenState.bmi;
+                    final bodyType = screenState.bodyType;
+                    AppRouter.push(
+                      context,
+                      MealPlanView(
+                        bmi: bmi!,
+                        plan: getPlan(bodyType!),
+                      ),
+                    );
+                  },
+                  buttonType: ButtonType.borderedSecondary,
+                ),
+              ],
             ],
           ),
         ),
       ),
     );
+  }
+
+  MealPlan getPlan(BodyType body) {
+    if (body.name == 'Underweight') {
+      return underweight;
+    } else if (body.name == 'Normal') {
+      return normal;
+    } else if (body.name == 'Overweight') {
+      return overweight;
+    } else {
+      return obese;
+    }
   }
 }
