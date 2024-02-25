@@ -5,7 +5,7 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenState = _ScreenState.s(context);
+    final screenState = _ScreenState.s(context, true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meals'),
@@ -134,9 +134,39 @@ class _Body extends StatelessWidget {
                   if (!isValid) return;
                   Map<String, dynamic> payload = form.value;
                   debugPrint(payload.toString());
+
+                  double weight = double.parse(payload['weight'] as String);
+                  double height = double.parse(payload['height'] as String);
+
+                  double calories = double.parse(payload['calories'] as String);
+
+                  double bmi = AppUtils.calculateBMI(height, weight);
+
+                  String gender = payload['gender'] as String;
+
+                  screenState.setBmi(bmi);
+
+                  screenState.setBodyType(bmi, gender);
                 },
                 buttonType: ButtonType.secondary,
-              )
+              ),
+              Space.yf(50),
+              if (screenState.bmi != null && screenState.bodyType != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _Card(
+                      header: 'BMI',
+                      sub: screenState.bmi!.toStringAsFixed(2),
+                      color: AppTheme.c.primary,
+                    ),
+                    _Card(
+                      header: 'Health',
+                      sub: screenState.bodyType!.name,
+                      color: AppTheme.c.grey,
+                    ),
+                  ],
+                )
             ],
           ),
         ),

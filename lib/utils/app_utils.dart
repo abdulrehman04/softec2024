@@ -11,4 +11,14 @@ class AppUtils {
       return 'Ended';
     }
   }
+
+  static double calculateBMI(double heightInCM, double weightInKG) {
+    // Convert height from cm to meters
+    double heightInMeters = heightInCM / 100;
+
+    // Calculate BMI
+    double bmi = weightInKG / (heightInMeters * heightInMeters);
+
+    return bmi;
+  }
 }
