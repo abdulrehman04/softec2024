@@ -39,6 +39,7 @@ class CreatePost extends StatelessWidget {
                       caption.text.trim(),
                       screenProvider.pickedImage!,
                     );
+                    screenProvider.resetSelectedPic();
                     if (result) {
                       if (context.mounted) {
                         Navigator.pop(context);

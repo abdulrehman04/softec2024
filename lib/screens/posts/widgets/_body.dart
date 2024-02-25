@@ -29,14 +29,7 @@ class _BodyState extends State<_Body> {
           actions: [
             IconButton(
               onPressed: () {
-                AppRouter.push(
-                  context,
-                  MealPlanView(
-                    plan: obese,
-                    bmi: 45.2,
-                  ),
-                );
-                // AppRouter.push(context, const ChatScreen());
+                AppRouter.push(context, const ChatScreen());
               },
               icon: const Icon(Icons.telegram),
             )

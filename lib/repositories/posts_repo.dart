@@ -10,27 +10,32 @@ class PostsRepo {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  Future uploadImage(File file) async {
+    final task = await _storage
+        .ref()
+        .child(DateTime.now().toIso8601String())
+        .putFile(file);
+
+    String link = await task.ref.getDownloadURL();
+    return link;
+  }
+
   Future<bool> createPost(
     context, {
     String caption = '',
-    required File file,
+    required String fileLink,
     required String uid,
     required String name,
     required String profileImage,
   }) async {
     try {
-      final task = await _storage
-          .ref()
-          .child(DateTime.now().toIso8601String())
-          .putFile(file);
-
-      String link = await task.ref.getDownloadURL();
       await _db.collection('posts').add({
         'caption': caption,
         'uid': uid,
         'name': name,
         'image': profileImage,
-        'imageLink': link,
+        'imageLink': fileLink,
       });
 
       await _db.collection('users').doc(uid).update({

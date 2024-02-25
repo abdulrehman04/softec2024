@@ -325,6 +325,8 @@ class OtherUserProfile extends StatelessWidget {
                                       15.verticalSpace,
                                       TextField(
                                         controller: review,
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                         decoration: const InputDecoration(
                                           hintText: 'Add remarks',
                                           border: OutlineInputBorder(),

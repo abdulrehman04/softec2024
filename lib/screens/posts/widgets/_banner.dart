@@ -24,7 +24,7 @@ class _Banner extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('My Plans!', style: AppText.h1b),
-                  Space.y!,
+                  // 5.verticalSpace,
                   Text('Get a meal plan right now!', style: AppText.h3),
                 ],
               ),

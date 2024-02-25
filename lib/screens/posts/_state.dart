@@ -39,17 +39,33 @@ class PostState extends ChangeNotifier {
       isLoading = false;
       return Future(() => false);
     }
+    String link = await PostsRepo().uploadImage(file);
     bool result = await PostsRepo().createPost(
       context,
       caption: caption,
-      file: file,
+      fileLink: link,
       uid: userData.uid,
       name: userData.fullname,
       profileImage: userData.profilePicture,
     );
 
+    posts.add(
+      Post(
+        caption: caption,
+        imageLink: link,
+        uid: userData.uid,
+        name: userData.fullname,
+        image: userData.profilePicture,
+      ),
+    );
+
     isLoading = false;
     notifyListeners();
     return result;
+  }
+
+  void resetSelectedPic() {
+    pickedImage = null;
+    notifyListeners();
   }
 }

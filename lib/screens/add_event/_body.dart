@@ -48,6 +48,7 @@ class _BodyState extends State<_Body> {
               Space.y2!,
               FormBuilderDateRangePicker(
                 firstDate: DateTime.now(),
+                style: AppText.b1,
                 name: 'date',
                 decoration: InputDecoration(
                   filled: true,
@@ -60,13 +61,13 @@ class _BodyState extends State<_Body> {
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(
                       width: 0,
-                      color: Colors.transparent,
+                      color: Colors.white,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: AppTheme.c.backgroundSub!,
+                      color: Colors.white,
                       width: AppDimensions.normalize(.5),
                     ),
                   ),

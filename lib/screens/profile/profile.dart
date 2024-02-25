@@ -239,6 +239,7 @@ class ProfileScreen extends StatelessWidget {
                   AppTextField(
                     name: 'name',
                     label: 'Name',
+                    enabled: false,
                     controller: TextEditingController(
                       text: controller.userData.fullname,
                     ),
@@ -247,6 +248,7 @@ class ProfileScreen extends StatelessWidget {
                   AppTextField(
                     name: 'email',
                     label: 'Email',
+                    enabled: false,
                     controller: TextEditingController(
                       text: controller.userData.email,
                     ),
@@ -255,6 +257,7 @@ class ProfileScreen extends StatelessWidget {
                   AppTextField(
                     name: 'domain',
                     label: 'Domain',
+                    enabled: false,
                     controller: TextEditingController(
                       text: controller.userData.domain,
                     ),
@@ -263,6 +266,7 @@ class ProfileScreen extends StatelessWidget {
                   AppTextField(
                     name: 'focus',
                     label: 'Focus',
+                    enabled: false,
                     controller: TextEditingController(
                       text: controller.userData.focus,
                     ),
