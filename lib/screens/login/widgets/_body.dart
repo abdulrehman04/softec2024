@@ -63,8 +63,11 @@ class _Body extends StatelessWidget {
                           await authService.login(
                             payload,
                           );
-
-                          if (authService.authData != null) {
+                          if (authService.isEmailNotVerified) {
+                            if (!context.mounted) return;
+                            SnackBars.failure(
+                                context, 'Please verify your email');
+                          } else if (authService.authData != null) {
                             if (!context.mounted) return;
                             'home'.pushReplace(context);
                           }

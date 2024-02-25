@@ -67,7 +67,7 @@ class _Body extends StatelessWidget {
                                     onSelected(option);
                                   },
                                   child: ListTile(
-                                    title: Text(option),
+                                    title: Text(option, style: AppText.b2!),
                                   ),
                                 );
                               },
@@ -165,7 +165,10 @@ class _Body extends StatelessWidget {
                                     onSelected(option);
                                   },
                                   child: ListTile(
-                                    title: Text(option),
+                                    title: Text(
+                                      option,
+                                      style: AppText.b2,
+                                    ),
                                   ),
                                 );
                               },
@@ -211,7 +214,7 @@ class _Body extends StatelessWidget {
                   Space.y2!,
                   FormBuilderCheckbox(
                     name: 'isProfessional',
-                    title: const Text('Professional Account'),
+                    title: Text('Professional Account', style: AppText.b2),
                   ),
                   Space.y2!,
                   Space.y2!,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/repositories/auth_repo.dart';
+import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class AuthService extends ChangeNotifier {
   bool isRegisterLoading = false;
@@ -24,6 +25,7 @@ class AuthService extends ChangeNotifier {
   }
 
   bool isLoginLoading = false;
+  bool isEmailNotVerified = false;
   Future<void> login(Map<String, dynamic> payload) async {
     try {
       isLoginLoading = true;
@@ -32,6 +34,12 @@ class AuthService extends ChangeNotifier {
       final deviceToken = await FirebaseMessaging.instance.getToken();
 
       authData = await AuthRepo.loginUser(payload);
+      if (authData == null) {
+        isLoginLoading = false;
+        isEmailNotVerified = true;
+        notifyListeners();
+        return;
+      }
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -49,6 +57,16 @@ class AuthService extends ChangeNotifier {
       isLoginLoading = false;
       notifyListeners();
       debugPrint(e.toString());
+      // if (e.toString().contains('Email not verified')) {
+      //   isEmailNotVerified = true;
+      //   if (!context.mounted) return;
+      //   print('here');
+      //   SnackBars.failure(
+      //     context,
+      //     'Please verify your email address',
+      //   );
+      //   notifyListeners();
+      // }
       rethrow;
     }
   }
