@@ -112,17 +112,27 @@ class _BodyState extends State<_Body> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.builder(
-                itemCount: controller.posts.length,
-                itemBuilder: (context, index) {
-                  Post item = controller.posts[index];
-                  return PostItem(
-                    name: item.name,
-                    post: item.imageLink,
-                    title: item.caption,
-                    image: item.image,
-                  );
-                },
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const _Banner(),
+                    ListView.builder(
+                      itemCount: controller.posts.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        Post item = controller.posts[index];
+                        return PostItem(
+                          name: item.name,
+                          post: item.imageLink,
+                          title: item.caption,
+                          image: item.image,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
       ),
     );
