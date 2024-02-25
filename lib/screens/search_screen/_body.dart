@@ -150,7 +150,7 @@ class _BodyState extends State<_Body> {
                                         chat.profilePicture,
                                       ),
                                     ),
-                              title: Text(chat.fullname),
+                              title: Text(chat.fullname, style: AppText.h3),
                               onTap: () {
                                 AppRouter.push(
                                   context,
