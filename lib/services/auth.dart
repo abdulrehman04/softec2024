@@ -15,6 +15,7 @@ class AuthService extends ChangeNotifier {
       notifyListeners();
 
       authData = await AuthRepo.signUp(payload);
+      fetchAllUsers();
       isRegisterLoading = false;
       notifyListeners();
     } catch (e) {
