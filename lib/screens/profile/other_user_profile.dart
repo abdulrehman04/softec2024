@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
 import 'package:softec_app/models/auth_data.dart';
+import 'package:softec_app/router/router.dart';
+import 'package:softec_app/screens/conversation/conversation.dart';
 import 'package:softec_app/screens/profile/profileState.dart';
 import 'package:softec_app/screens/profile/widgets/usertype_row.dart';
 import 'package:softec_app/services/auth.dart';
@@ -22,6 +25,18 @@ class OtherUserProfile extends StatelessWidget {
     AuthData userData = Provider.of<AuthService>(context).authData!;
     controller.init(context, user);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          AppRouter.push(
+            context,
+            ConversationScreen(
+              receiver: user,
+            ),
+          );
+        },
+        child: const Icon(CupertinoIcons.chat_bubble_2),
+      ),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Profile'),
       ),
@@ -228,6 +243,7 @@ class OtherUserProfile extends StatelessWidget {
                 AppTextField(
                   name: 'name',
                   label: 'Name',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.fullname,
                   ),
@@ -236,6 +252,7 @@ class OtherUserProfile extends StatelessWidget {
                 AppTextField(
                   name: 'email',
                   label: 'Email',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.email,
                   ),
@@ -244,6 +261,7 @@ class OtherUserProfile extends StatelessWidget {
                 AppTextField(
                   name: 'domain',
                   label: 'Domain',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.domain,
                   ),
@@ -252,6 +270,7 @@ class OtherUserProfile extends StatelessWidget {
                 AppTextField(
                   name: 'focus',
                   label: 'Focus',
+                  enabled: false,
                   controller: TextEditingController(
                     text: controller.userData.focus,
                   ),

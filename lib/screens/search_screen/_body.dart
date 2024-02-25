@@ -62,46 +62,56 @@ class _BodyState extends State<_Body> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: (screenState.nearMe).map((e) {
-                            return Container(
-                              height: 100.h,
-                              width: 130.w,
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Colors.grey[900]!,
-                                  width: 2,
-                                ),
-                              ),
-                              padding: EdgeInsets.all(5),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  e.profilePicture == ''
-                                      ? Container(
-                                          height: 50.h,
-                                          width: 50.w,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.grey[900],
-                                          ),
-                                          child: const Icon(
-                                            Icons.person,
-                                            size: 27,
-                                          ),
-                                        )
-                                      : CircleAvatar(
-                                          radius: 70,
-                                          backgroundImage: NetworkImage(
-                                            e.profilePicture,
-                                          ),
-                                        ),
-                                  5.verticalSpace,
-                                  Text(
-                                    e.fullname,
-                                    style: const TextStyle(color: Colors.white),
+                            return GestureDetector(
+                              onTap: () {
+                                AppRouter.push(
+                                  context,
+                                  OtherUserProfile(user: e),
+                                );
+                              },
+                              child: Container(
+                                height: 100.h,
+                                width: 130.w,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.grey[900]!,
+                                    width: 2,
                                   ),
-                                ],
+                                ),
+                                padding: const EdgeInsets.all(5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    e.profilePicture == ''
+                                        ? Container(
+                                            height: 50.h,
+                                            width: 50.w,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.grey[900],
+                                            ),
+                                            child: const Icon(
+                                              Icons.person,
+                                              size: 27,
+                                            ),
+                                          )
+                                        : CircleAvatar(
+                                            radius: 70,
+                                            backgroundImage: NetworkImage(
+                                              e.profilePicture,
+                                            ),
+                                          ),
+                                    5.verticalSpace,
+                                    Text(
+                                      e.fullname,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           }).toList(),
@@ -150,7 +160,7 @@ class _BodyState extends State<_Body> {
                                         chat.profilePicture,
                                       ),
                                     ),
-                              title: Text(chat.fullname),
+                              title: Text(chat.fullname, style: AppText.h3),
                               onTap: () {
                                 AppRouter.push(
                                   context,

@@ -21,6 +21,7 @@ class ProfileScreen extends StatelessWidget {
     ProfileState controller = Provider.of<ProfileState>(context);
     controller.init(context, Provider.of<AuthService>(context).authData!);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Profile'),
       ),
@@ -43,25 +44,32 @@ class ProfileScreen extends StatelessWidget {
                               height: 100.h,
                               child: Stack(
                                 children: [
-                                  controller.userData.profilePicture == ''
-                                      ? Container(
-                                          height: 80.h,
-                                          width: 80.w,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.grey[900],
-                                          ),
-                                          child: const Icon(
-                                            Icons.person,
-                                            size: 50,
-                                          ),
-                                        )
-                                      : CircleAvatar(
-                                          radius: 70,
-                                          backgroundImage: NetworkImage(
-                                            controller.userData.profilePicture,
-                                          ),
-                                        ),
+                                  InkWell(
+                                    onTap: () {
+                                      controller.updateProfilePicture(context);
+                                    },
+                                    child:
+                                        controller.userData.profilePicture == ''
+                                            ? Container(
+                                                height: 80.h,
+                                                width: 80.w,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.grey[900],
+                                                ),
+                                                child: const Icon(
+                                                  Icons.person,
+                                                  size: 50,
+                                                ),
+                                              )
+                                            : CircleAvatar(
+                                                radius: 70,
+                                                backgroundImage: NetworkImage(
+                                                  controller
+                                                      .userData.profilePicture,
+                                                ),
+                                              ),
+                                  ),
                                   Align(
                                     alignment: Alignment.center,
                                     child: controller.isLoading
