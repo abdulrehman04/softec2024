@@ -6,7 +6,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenState = _ScreenState.s(context, true);
-    final authService = Provider.of<AuthService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: true);
 
     return SafeArea(
       child: Scaffold(
@@ -49,30 +49,28 @@ class _Body extends StatelessWidget {
                   validator: FormBuilderValidators.required(),
                 ),
                 const Spacer(),
-                AppButton(
-                  label: 'Login',
-                  onPressed: () async {
-                    final form = screenState.formKey.currentState!;
-                    final isValid = form.saveAndValidate();
-                    if (!isValid) return;
-                    Map<String, dynamic> payload = form.value;
-                    await authService.login(
-                      payload,
-                    );
+                authService.isLoginLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : AppButton(
+                        label: 'Login',
+                        onPressed: () async {
+                          final form = screenState.formKey.currentState!;
+                          final isValid = form.saveAndValidate();
+                          if (!isValid) return;
+                          Map<String, dynamic> payload = form.value;
+                          await authService.login(
+                            payload,
+                          );
 
-                    if (authService.authData != null) {
-                      if (!context.mounted) return;
-                      'home'.push(context);
-                    }
-                    // NotificationBase().sendPushMessage(
-                    //     'tBRgFxrMbhbgebz3iukHoOnHSQ53',
-                    //     'eEcpn9aKRp60Ein2B-YrST:APA91bFCpSWjfcD6B6i7ymVz5wvKFf5SHR4LrIuShxubgh8fK_y4j7Qk1WHJBRnjELlgxGuOv7Hh76M4O1LjCIvxpb9IkGmGJgNbjk0WKOatCfbr7f81xFPjhrKLVE1WyUJa-OVMI84b',
-                    //     'this is a body',
-                    //     'title');
-                    // NotificationBase.showBigTextNotification(title: 'title', body: 'body', fln: FlutterLocalNotificationsPlugin());
-                  },
-                  buttonType: ButtonType.borderedSecondary,
-                ),
+                          if (authService.authData != null) {
+                            if (!context.mounted) return;
+                            'home'.pushReplace(context);
+                          }
+                        },
+                        buttonType: ButtonType.borderedSecondary,
+                      ),
                 const AppDivider(
                   text: 'OR',
                 ),

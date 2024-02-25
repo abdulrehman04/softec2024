@@ -8,6 +8,7 @@ import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/models/ratings.dart';
 import 'package:softec_app/services/auth.dart';
 import 'package:softec_app/services/image_picker.dart';
+import 'package:softec_app/services/notifications/base.dart';
 import 'package:softec_app/widgets/core/snackbar/custom_snackbar.dart';
 
 class ProfileState extends ChangeNotifier {
@@ -62,6 +63,11 @@ class ProfileState extends ChangeNotifier {
   }
 
   void addFollower(context) {
+    AuthData currentUser = Provider.of<AuthService>(
+      context,
+      listen: false,
+    ).authData!;
+
     _db.collection('users').doc(userData.uid).update({
       'followers': FieldValue.arrayUnion(
         [Provider.of<AuthService>(context, listen: false).authData!.uid],
@@ -70,6 +76,13 @@ class ProfileState extends ChangeNotifier {
 
     userData.followers.add(
       Provider.of<AuthService>(context, listen: false).authData!.uid,
+    );
+
+    NotificationBase().sendPushMessage(
+      userData.uid,
+      userData.deviceToken ?? '',
+      '${currentUser.fullname} just followed you!',
+      'A new follower!',
     );
     notifyListeners();
   }

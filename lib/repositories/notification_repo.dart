@@ -9,7 +9,7 @@ class NotificationRepo {
 
   Future<void> saveNotification(String uid, NotificationModel noti) async {
     try {
-      await _firestore.collection('users').doc(_auth.currentUser!.uid).set(
+      await _firestore.collection('users').doc(uid).set(
         {
           'notifications': FieldValue.arrayUnion([noti.toMap()])
         },
