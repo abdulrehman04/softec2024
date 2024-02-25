@@ -27,6 +27,15 @@ class AuthService extends ChangeNotifier {
 
   bool isLoginLoading = false;
   bool isEmailNotVerified = false;
+
+  void reset() {
+    isLoginLoading = false;
+    isEmailNotVerified = false;
+    isRegisterLoading = false;
+    authData = null;
+    notifyListeners();
+  }
+
   Future<void> login(Map<String, dynamic> payload) async {
     try {
       isLoginLoading = true;
@@ -38,6 +47,8 @@ class AuthService extends ChangeNotifier {
       if (authData == null) {
         isLoginLoading = false;
         isEmailNotVerified = true;
+        authData = null;
+        isRegisterLoading = false;
         notifyListeners();
         return;
       }
@@ -58,16 +69,6 @@ class AuthService extends ChangeNotifier {
       isLoginLoading = false;
       notifyListeners();
       debugPrint(e.toString());
-      // if (e.toString().contains('Email not verified')) {
-      //   isEmailNotVerified = true;
-      //   if (!context.mounted) return;
-      //   print('here');
-      //   SnackBars.failure(
-      //     context,
-      //     'Please verify your email address',
-      //   );
-      //   notifyListeners();
-      // }
       rethrow;
     }
   }

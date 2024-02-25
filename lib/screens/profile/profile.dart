@@ -22,7 +22,6 @@ class ProfileScreen extends StatelessWidget {
     controller.init(context, Provider.of<AuthService>(context).authData!);
     final authP = Provider.of<AuthService>(context, listen: true);
 
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -36,6 +35,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
               );
               authP.logout();
+              authP.reset();
+              controller.reset();
             },
             icon: const Icon(Icons.exit_to_app),
           )
