@@ -46,6 +46,80 @@ class _BodyState extends State<_Body> {
                         },
                       ),
                       Space.y2!,
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Users near me',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      15.verticalSpace,
+                      SizedBox(
+                        height: 100.h,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: (screenState.nearMe).map((e) {
+                            return Container(
+                              height: 100.h,
+                              width: 130.w,
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.grey[900]!,
+                                  width: 2,
+                                ),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  e.profilePicture == ''
+                                      ? Container(
+                                          height: 50.h,
+                                          width: 50.w,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey[900],
+                                          ),
+                                          child: const Icon(
+                                            Icons.person,
+                                            size: 27,
+                                          ),
+                                        )
+                                      : CircleAvatar(
+                                          radius: 70,
+                                          backgroundImage: NetworkImage(
+                                            e.profilePicture,
+                                          ),
+                                        ),
+                                  5.verticalSpace,
+                                  Text(e.fullname),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Space.y2!,
+                      25.verticalSpace,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          screenState.allUsers.length ==
+                                  screenState.filteredUsers.length
+                              ? 'All users'
+                              : 'Filtered users',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      15.verticalSpace,
                       Expanded(
                         child: ListView.builder(
                           padding: Space.z,
@@ -53,7 +127,25 @@ class _BodyState extends State<_Body> {
                           itemBuilder: (context, index) {
                             final chat = screenState.filteredUsers[index];
                             return ListTile(
-                              leading: const Icon(Icons.person),
+                              leading: chat.profilePicture == ''
+                                  ? Container(
+                                      height: 50.h,
+                                      width: 50.w,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.grey[900],
+                                      ),
+                                      child: const Icon(
+                                        Icons.person,
+                                        size: 27,
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 70,
+                                      backgroundImage: NetworkImage(
+                                        chat.profilePicture,
+                                      ),
+                                    ),
                               title: Text(chat.fullname),
                               onTap: () {
                                 AppRouter.push(

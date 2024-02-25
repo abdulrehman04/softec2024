@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _handleLocationPermission(context);
     //Set the fit size (Find your UI design, look at the dimensions of the device screen and fill it in,unit in dp)
     return ScreenUtilInit(
       designSize: const Size(393, 852),
@@ -77,5 +79,34 @@ class MyApp extends StatelessWidget {
       },
       // child: const HomePage(title: 'First Method'),
     );
+  }
+
+  Future<bool> _handleLocationPermission(context) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
   }
 }

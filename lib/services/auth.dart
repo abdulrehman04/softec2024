@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:softec_app/models/auth_data.dart';
 import 'package:softec_app/repositories/auth_repo.dart';
 
@@ -31,7 +32,14 @@ class AuthService extends ChangeNotifier {
       final deviceToken = await FirebaseMessaging.instance.getToken();
 
       authData = await AuthRepo.loginUser(payload);
-      await AuthRepo.setToken(authData!.uid, deviceToken ?? '');
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      await AuthRepo.setTokenAndLocation(
+        authData!.uid,
+        deviceToken ?? '',
+        position,
+      );
       authData!.deviceToken = deviceToken;
 
       fetchAllUsers();
