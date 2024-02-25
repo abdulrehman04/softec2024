@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -84,6 +85,22 @@ class AuthService extends ChangeNotifier {
     } catch (e) {
       isFetchingUsers = false;
       notifyListeners();
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      isFetchingUsers = false;
+      allUsers = [];
+      isLoginLoading = false;
+      isRegisterLoading = false;
+      isEmailNotVerified = false;
+      authData = null;
+      notifyListeners();
+    } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
