@@ -31,7 +31,10 @@ class PostItem extends StatelessWidget {
                   horizontal: 12,
                   vertical: 8,
                 ),
-                child: Text(title),
+                child: Text(
+                  title,
+                  style: const TextStyle(color: Colors.white),
+                ),
               )
             : SizedBox(
                 height: 10.h,

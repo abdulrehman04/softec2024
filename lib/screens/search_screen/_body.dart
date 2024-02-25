@@ -51,9 +51,9 @@ class _BodyState extends State<_Body> {
                         child: Text(
                           'Users near me',
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                       ),
                       15.verticalSpace,
@@ -97,7 +97,10 @@ class _BodyState extends State<_Body> {
                                           ),
                                         ),
                                   5.verticalSpace,
-                                  Text(e.fullname),
+                                  Text(
+                                    e.fullname,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
                                 ],
                               ),
                             );
@@ -114,6 +117,7 @@ class _BodyState extends State<_Body> {
                               ? 'All users'
                               : 'Filtered users',
                           style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),

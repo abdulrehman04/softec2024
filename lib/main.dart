@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:provider/provider.dart';
 import 'package:softec_app/configs/configs.dart';
@@ -66,7 +67,9 @@ class MyApp extends StatelessWidget {
               notificationService.listenNotifications(context);
               return child!;
             },
-            theme: theme.themeDark,
+            theme: theme.themeDark.copyWith(
+              textTheme: GoogleFonts.poppinsTextTheme(),
+            ),
             onGenerateRoute: onGenerateRoutes,
             navigatorObservers: [
               ...observers,

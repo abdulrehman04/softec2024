@@ -73,7 +73,7 @@ class OtherUserProfile extends StatelessWidget {
                           5.verticalSpace,
                           Text(
                             controller.userData.fullname,
-                            style: AppText.h2,
+                            style: AppText.h2!.copyWith(color: Colors.white),
                           )
                         ],
                       ),
@@ -85,7 +85,10 @@ class OtherUserProfile extends StatelessWidget {
                         children: [
                           Text(
                             '${controller.userData.followers.length} Follower   |   ${controller.userData.ratings!.length} Ratings',
-                            style: const TextStyle(fontSize: 13),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
                           ),
                           // 5.verticalSpace,
                           Divider(
@@ -174,7 +177,10 @@ class OtherUserProfile extends StatelessWidget {
                                     children: [
                                       const Text(
                                         'Add review',
-                                        style: TextStyle(fontSize: 25),
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       15.verticalSpace,
                                       Row(
